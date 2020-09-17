@@ -30,7 +30,7 @@ const userExists = (users, username) => {
 }
 
 
-}
+
 
 
 const getRoom = (roomName) => {
@@ -41,4 +41,8 @@ const getRoom = (roomName) => {
     if (room != null) return room;
 
     return false;
+}
+
+module.exports = {
+    userJoin
 }
