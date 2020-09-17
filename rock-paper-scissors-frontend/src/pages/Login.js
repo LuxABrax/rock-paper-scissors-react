@@ -25,7 +25,9 @@ const Login = () => {
 					value={room}
 					onChange={e => setRoom(e.target.value)}
 				/>
-				<Link to={`/room/${room}${username}`}>Start</Link>
+				<Link to={`/room?room=${room}&&username=${username}`}>
+					Start
+				</Link>
 			</form>
 		</div>
 	);
