@@ -1,0 +1,25 @@
+.HandOptions {
+	width: 80%;
+	height: 20%;
+	margin: 10px auto;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+	align-items: center;
+}
+.Hand {
+	width: 200px;
+	height: 200px;
+	border: 2px solid mediumseagreen;
+	cursor: pointer;
+}
+.Hand > img {
+	height: 100%;
+	object-fit: cover;
+}
+.rock {
+}
+.paper {
+}
+.scissors {
+}
