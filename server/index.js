@@ -1,11 +1,11 @@
-const queryString = require('query-string');
-
 const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
 const cors = require('cors');
 
-const PORT = process.env.PORT || 5000;
+const { userJoin } = require('./utils.js');
+
+const PORT = process.env.PORT || 5002;
 
 
 const router = require('./router.js');
@@ -19,14 +19,16 @@ app.use(router);
 
 io.on('connection', (socket) => {
 
-    query = queryString.parse(location.search);
+    socket.on('joinRoom', (roomName, username) => {
 
-    socket.on('joining', () => {
+        let user = userJoin(socket.id, roomName, username);
 
+        if (user.error) {
+            socket.emit('username already taken');
+            return socket.disconnect(true);
+        }
 
-        socket.join(query.roomName, () => {
-            io.to(roomName).emit(`${query.username} has joined the chat`);
-        });
+        socket.emit('user joined');
 
     })
     /* socket.on('joinRoom', ({ username, room }) => {
@@ -36,4 +38,12 @@ io.on('connection', (socket) => {
             
         }
     }) */
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected')
+    })
 })
+
+server.listen(PORT, () => {
+    console.log('server has started on port', PORT);
+});
