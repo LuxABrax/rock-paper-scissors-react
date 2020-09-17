@@ -12,9 +12,13 @@
 	height: 200px;
 	border: 2px solid mediumseagreen;
 	cursor: pointer;
+	display: flex;
+	flex-direction: row;
 }
 .Hand > img {
 	height: 100%;
+	justify-content: center;
+	margin: 0px auto;
 	object-fit: cover;
 }
 .rock {
