@@ -17,7 +17,7 @@ function App() {
 			<Router>
 				<Switch>
 					<Route path='/' exact component={Login} />
-					<Route path='/room/:rid' exact component={RoomPage} />
+					<Route path='/room' exact component={RoomPage} />
 					<Redirect to='/' />
 				</Switch>
 			</Router>
