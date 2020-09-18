@@ -1,12 +1,15 @@
 .roomContainer {
-	position: absolute;
-	align-items: center;
-}
-.timer {
-	color: red;
-	font-weight: bolder;
-	z-index: 10;
 	position: relative;
-	top: 49%;
-	left: 48%;
+	width: 100%;
+}
+.cTimer {
+	color: red;
+	font-size: xx-large;
+	font-weight: bolder;
+	z-index: 100;
+	position: absolute;
+	top: 40%;
+	width: 100%;
+	text-align: center;
+	margin: 0 auto;
 }

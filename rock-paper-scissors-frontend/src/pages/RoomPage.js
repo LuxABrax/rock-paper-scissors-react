@@ -4,6 +4,7 @@ import queryString from "query-string";
 import GameScreen from "../components/GameScreen";
 import HandOptions from "../components/HandOptions";
 import { Link } from "react-router-dom";
+import "./RoomPage.css";
 
 let socket;
 
@@ -29,7 +30,9 @@ const RoomPage = ({ location }) => {
 	}, [ENDPOINT, location.seach]);
 
 	//! Timer !
-	const [counter, setCounter] = useState(10);
+
+	const [counter, setCounter] = useState(0);
+
 	useEffect(() => {
 		const timer =
 			counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
@@ -39,10 +42,19 @@ const RoomPage = ({ location }) => {
 	return (
 		<div className='roomContainer'>
 			<Link to='/'>Home</Link>
-			<HandOptions />
-			<h1 className='timer'>{counter}</h1>
+			<HandOptions player={2} />
+			<div className='cTimer'>
+				<button
+					onClick={() => {
+						setCounter(5);
+					}}
+				>
+					start
+				</button>
+				<h1 className='timer'>{counter}</h1>
+			</div>
 			<GameScreen />
-			<HandOptions />
+			<HandOptions player={1} />
 		</div>
 	);
 };
