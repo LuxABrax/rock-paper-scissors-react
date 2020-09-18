@@ -3,7 +3,7 @@ const express = require('express');
 const socketio = require('socket.io');
 const cors = require('cors');
 
-const { userJoin } = require('./utils.js');
+const { addPlayerToRoom } = require('./utils.js');
 
 const PORT = process.env.PORT || 5002;
 
@@ -19,14 +19,15 @@ app.use(router);
 
 io.on('connection', (socket) => {
 
-    socket.on('joinRoom', ({ roomname, username }) => {
+    socket.on('joinRoom', ({ roomName, username }) => {
+        console.log(roomName)
 
-        let user = userJoin(socket.id, roomname, username);
+        let user = addPlayerToRoom(socket.id, username, roomName);
 
         //logger
         console.log(user);
 
-        if (user.error || !username || !roomname) {
+        if (user.error || !username || !roomName) {
             socket.emit('err', user.error);
             return socket.disconnect(true);
         }
