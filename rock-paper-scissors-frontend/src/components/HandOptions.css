@@ -1,6 +1,6 @@
 .HandOptions {
-	width: 80%;
-	height: 20%;
+	width: 40%;
+	/* height: 20%; */
 	margin: 10px auto;
 	display: flex;
 	flex-flow: row wrap;
@@ -8,16 +8,25 @@
 	align-items: center;
 }
 .Hand {
-	width: 200px;
-	height: 200px;
+	width: 120px;
+	height: 120px;
 	border: 2px solid mediumseagreen;
+	border-radius: 50%;
 	cursor: pointer;
 	display: flex;
 	flex-direction: row;
 }
+.player1 > .Hand:hover {
+	transform: scale(1.2);
+}
 .Hand > img {
 	height: 100%;
+	border-radius: 50%;
 	justify-content: center;
 	margin: 0px auto;
 	object-fit: cover;
+}
+.active {
+	transform: scale(1.2);
+	border-color: red;
 }
