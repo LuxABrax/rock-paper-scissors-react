@@ -30,3 +30,12 @@
 	transform: scale(1.2);
 	border-color: red;
 }
+@media (max-width: 950px) {
+	.HandOptions {
+		width: 100%;
+	}
+	.Hand {
+		width: 100px;
+		height: 100px;
+	}
+}

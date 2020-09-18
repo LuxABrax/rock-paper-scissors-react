@@ -41,7 +41,9 @@ const RoomPage = ({ location }) => {
 
 	return (
 		<div className='roomContainer'>
-			<Link to='/'>Home</Link>
+			<Link to='/'>
+				<button className='home-btn'>Home</button>
+			</Link>
 			<HandOptions player={2} />
 			<div className='cTimer'>
 				<button
