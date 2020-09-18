@@ -19,29 +19,34 @@ app.use(router);
 
 io.on('connection', (socket) => {
 
-    socket.on('joinRoom', (roomName, username) => {
+    socket.on('joinRoom', ({ roomname, username }) => {
 
-        let user = userJoin(socket.id, roomName, username);
+        let user = userJoin(socket.id, roomname, username);
 
-        if (user.error) {
-            socket.emit('username already taken');
+        //logger
+        console.log(user);
+
+        if (user.error || !username || !roomname) {
+            socket.emit('err', user.error);
             return socket.disconnect(true);
         }
 
-        socket.emit('user joined');
+        socket.join(user.roomname);
+        socket.broadcast
+            .to(user.roomname)
+            .emit(
+                'message',
+                `${user.username} has joined room: ${user.roomname}`
+            );
 
-    })
-    /* socket.on('joinRoom', ({ username, room }) => {
-        const user = userJoin(socket.id, username, room);
+    });
 
-        if(user.error) {
-            
-        }
-    }) */
 
-    socket.on('disconnect', () => {
-        console.log('user disconnected')
-    })
+
+
+    socket.on('disconnect', ({ username, roomname }) => {
+        console.log(`${username} disconnected`);
+    });
 })
 
 server.listen(PORT, () => {
