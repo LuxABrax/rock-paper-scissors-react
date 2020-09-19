@@ -11,17 +11,11 @@ let socket;
 const RoomPage = ({ location }) => {
 	const ENDPOINT = "localhost:5002";
 	const [room, setRoom] = useState({ roomName: "", players: [] });
+	const [user, setUser] = useState({ roomName: "", username: '' });
 
 	useEffect(() => {
-		const { room, username } = queryString.parse(location.search);
-		console.log(room, username);
+
 		socket = io(ENDPOINT);
-
-		setRoom({ roomName: room, players: [username] });
-
-		socket.emit("joinRoom", { roomName: room, username }, () => {
-			console.log(room, username);
-		});
 
 		return () => {
 			socket.emit("disconnect");
@@ -29,6 +23,11 @@ const RoomPage = ({ location }) => {
 		};
 	}, [ENDPOINT, location.seach]);
 
+	const onClick = ({ username, roomName }) => {
+		socket.emit("joinRoom", { roomName: room, username }, () => {
+			console.log(room, username);
+		});
+	}
 	//! Timer !
 
 	const [counter, setCounter] = useState(0);
