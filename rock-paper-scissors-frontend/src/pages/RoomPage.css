@@ -1,6 +1,15 @@
 .roomContainer {
+	display: flex;
+	flex-flow: row wrap;
+}
+.main {
 	position: relative;
-	width: 100%;
+}
+.sidebar-container {
+	flex: 0.3;
+}
+.room-board {
+	flex: 0.7;
 }
 .cTimer {
 	color: red;
@@ -8,8 +17,9 @@
 	font-weight: bolder;
 	z-index: 100;
 	position: absolute;
-	top: 40%;
-	width: 100%;
+	top: 0;
+	left: 80px;
+	width: 10%;
 	text-align: center;
 	margin: 0 auto;
 }

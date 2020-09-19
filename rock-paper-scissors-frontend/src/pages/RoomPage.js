@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
-import queryString from "query-string";
 import GameScreen from "../components/GameScreen";
 import HandOptions from "../components/HandOptions";
 import { Link } from "react-router-dom";
