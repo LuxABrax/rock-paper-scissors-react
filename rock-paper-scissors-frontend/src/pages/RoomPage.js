@@ -61,6 +61,9 @@ const RoomPage = ({ location }) => {
 					<GameScreen />
 					<HandOptions player={1} />
 				</div>
+				<div className='sidebar-info-container'>
+					<Sidebar value={joinRoom} />
+				</div>
 			</div>
 		</div>
 	);
