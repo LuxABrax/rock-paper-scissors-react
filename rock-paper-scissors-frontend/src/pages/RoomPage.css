@@ -4,12 +4,18 @@
 }
 .main {
 	position: relative;
+	height: 100vh;
 }
 .sidebar-container {
-	flex: 0.3;
+	flex: 0.15;
+}
+.sidebar-info-container {
+	flex: 0.15;
+	background-color: seagreen;
 }
 .room-board {
 	flex: 0.7;
+	height: 100vh;
 }
 .cTimer {
 	color: red;
@@ -35,4 +41,17 @@
 	color: seagreen;
 	border: 2px solid seagreen;
 	border-radius: 5px;
+}
+@media (max-width: 1000px) {
+	.sidebar-container {
+		flex: 0;
+		display: none;
+	}
+	.sidebar-info-container {
+		flex: 0;
+		display: none;
+	}
+	.room-board {
+		flex: 1;
+	}
 }
