@@ -3,9 +3,7 @@ import "./Sidebar.css";
 const Sidebar = ({ joinRoom }) => {
 	const [username, setName] = useState("");
 	const [room, setRoom] = useState("");
-	const joinRoom = e => {
-		e.preventDefault();
-	};
+
 	return (
 		<div className='sidebar'>
 			<form className='join-form'>
