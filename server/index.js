@@ -18,7 +18,7 @@ app.use(cors());
 app.use(router);
 
 io.on('connection', (socket) => {
-
+    console.log('user connected');
     socket.on('joinRoom', ({ roomname, username }) => {
 
         let user = userJoin(socket.id, roomname, username);
