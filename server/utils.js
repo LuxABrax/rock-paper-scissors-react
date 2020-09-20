@@ -1,7 +1,7 @@
-const rooms = [];
+let rooms = [];
 
 
-//check if user exists in rooms
+/* //check if user exists in rooms
 const userExists = (users, username) => {
     if (users.length !== 0) {
         return users.some((user, index, arr) => {
@@ -50,10 +50,20 @@ const getRoom = (roomName) => {
     if (room != null) return room;
 
     return false;
-}
+} */
 
-module.exports = {
-    userJoin
+
+
+const addPlayerToRoom = (socketID, username, roomName) => {
+
+    createRoom(roomName);
+    let user = addUser(username, roomName, socketID);
+
+    if (typeof user === 'string') return { error: user };
+
+    return user
+
+
 }
 
 
@@ -64,24 +74,26 @@ const createRoom = (roomName) => {
         if (room.name === roomName) exists = true;
     });
 
-    if (exists) return 'room already exists';
+    if (exists) return { created: false };
 
     rooms.push({ name: roomName, users: [] });
 
-    return { name: roomName, users: [] };
+    return { room: { name: roomName, users: [] }, created: true };
 }
 
 const addUser = (username, roomName, socketID) => {
 
+    let valid = checkUser(username, roomName);
+
+    if (!valid) return 'username taken!';
+
     rooms.forEach(room => {
         if (room.name === roomName) {
-            if (checkUser(username, roomName)) {
-                room.users.push({ username, roomName, socketID });
-            }
+            room.users.push({ username, roomName, socketID });
         }
     });
 
-    return { username, roomName, socketID };
+    return { username, roomname: roomName, socketID };
 
 };
 
@@ -105,10 +117,37 @@ const checkUser = (username, roomName) => {
     return true;
 }
 
+const removeUser = (username, roomName) => {
 
+    rooms.forEach(room => {
+        if (room.name === roomName) {
+            room.users = room.users.filter(user => user.username !== username);
+        }
+    });
+
+
+}
+
+const removeRoom = (roomName) => {
+
+    rooms = rooms.filter(room => room.name !== roomName);
+
+    return rooms;
+};
+
+/* 
 console.log(createRoom('room'));
 console.log(createRoom('room'));
 
 //addUser('getrobin', 'room', 'id');
 console.log(addUser('getrobin', 'room', 'id'));
+console.log(addUser('getrobin', 'room', 'id'));
+//console.log(removeUser('getrobin', 'room'));
+//removeRoom('room');
+console.log(rooms[0].users);
 console.log(rooms);
+ */
+
+module.exports = {
+    addPlayerToRoom
+}
