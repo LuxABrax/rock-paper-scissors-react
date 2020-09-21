@@ -26,7 +26,7 @@ const Sidebar = ({ joinRoom }) => {
 				<button
 					className='join-btn'
 					type='submit'
-					onClick={e => joinRoom(username, room)}
+					onClick={e => joinRoom(username, room, e)}
 				>
 					Join
 				</button>

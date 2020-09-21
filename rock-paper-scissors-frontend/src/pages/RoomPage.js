@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import io from "socket.io-client";
+import io, { Socket } from "socket.io-client";
 import GameScreen from "../components/GameScreen";
 import HandOptions from "../components/HandOptions";
 import { Link } from "react-router-dom";
@@ -10,32 +10,89 @@ let socket;
 
 const RoomPage = ({ location }) => {
 	const ENDPOINT = "localhost:5002";
-	const [room, setRoom] = useState({ roomName: "", players: [] });
-	const [user, setUser] = useState({ roomName: "", userName: "" });
+	const [hands, setHands] = useState(0);
+	const [user, setUser] = useState();
+	const [users, setUsers] = useState(0);
+	const [counter, setCounter] = useState(0);
+	const [active, setActive] = useState('none');
+
 	useEffect(() => {
 		socket = io(ENDPOINT);
+
+		socket.on('gameReady', (message) => {
+			console.log(message, 'gjhghg');
+		})
+
+		socket.on('leftRoom', ({ players }) => {
+			console.log(players);
+			setUsers([...players]);
+		});
+
+		socket.on('userJoined', ({ username, roomName, players }) => {
+			setUsers([...players]);
+			console.log(users, username, roomName);
+		});
+
+		socket.on('results', ({ opponentResult }) => {
+			console.log(...active);
+		});
 
 		return () => {
 			socket.emit("disconnect");
 			socket.off();
 		};
-	}, [ENDPOINT]);
+	}, []);
 
-	const joinRoom = (username, roomName) => {
-		setUser({ roomName, username });
+
+	const joinRoom = (username, roomName, e) => {
+		e.preventDefault();
+		console.log(username, roomName)
+		setUser(({ roomName, username }));
+		socket.emit('leaveRoom');
+
 		socket.emit("joinRoom", { roomName, username }, () => {
-			console.log(room, username);
+			/* setUsers([...users, username]); */
 		});
 	};
+
+	const sendResult = (result) => {
+		if (user.username && user.roomName) {
+
+			console.log(result, user.roomName, user.username);
+			socket.emit('result', { result, username: user.username, roomName: user.roomName });
+		}
+	};
+
+	/* 	const calcResult = (userInput, opponentInput) => {
+			let result = { userWon: false, opponentWon: false };
+			switch (userInput) {
+				case 'rock':
+					if (opponentInput === 'paper') result.oponentWon = true;
+					if (opponentInput === 'scissor') result.userWon = true;
+					break;
+				case 'paper':
+					if (opponentInput === 'rock') result.userWon = true;
+					if (opponentInput === 'scissor') result.opponentWon = true;
+					break;
+				case 'scissor':
+					if (opponentInput === 'rock') result.opponentWon = true;
+					if (opponentInput === 'paper') result.userWon = true;
+					break;
+				default:
+			}
+	
+			return result;
+	
+		} */
 	//! Timer !
 
-	const [counter, setCounter] = useState(0);
 
-	useEffect(() => {
+
+	/* useEffect(() => {
 		const timer =
 			counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
 		return () => clearInterval(timer);
-	}, [counter]);
+	}, [counter]); */
 
 	return (
 		<div className='main'>
@@ -54,15 +111,24 @@ const RoomPage = ({ location }) => {
 			</div>
 			<div className='roomContainer'>
 				<div className='sidebar-container'>
-					<Sidebar value={joinRoom} />
+					<Sidebar joinRoom={joinRoom} />
 				</div>
-				<div className='room-board'>
-					<HandOptions player={2} />
+				{user ? <div className='room-board'>
+					<HandOptions player={2} sendResult={sendResult} setActive={setActive} active={active} />
 					<GameScreen />
-					<HandOptions player={1} />
+					<HandOptions player={1} sendResult={sendResult} setActive={setActive} active={active} />
 				</div>
+					: <h1 className="room-board enter-room">Enter Room!</h1>}
+				{/* <div className='room-board'>
+					<HandOptions player={2} sendResult={sendResult} />
+					<GameScreen />
+					<HandOptions player={1} sendResult={sendResult} />
+				</div> */}
 				<div className='sidebar-info-container'>
-					<Sidebar value={joinRoom} />
+					<div className="roomInformation">
+						<h2 className="roomName__info">Room: {user ? user.roomName : ''}</h2>
+						<h3 className="playes_info">Players: {users ? users.length : users}</h3>
+					</div>
 				</div>
 			</div>
 		</div>
