@@ -8,14 +8,27 @@
 }
 .sidebar-container {
 	flex: 0.15;
+	
 }
+
 .sidebar-info-container {
 	flex: 0.15;
 	background-color: seagreen;
 }
+
 .room-board {
 	flex: 0.7;
 	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.enter-room {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .cTimer {
 	color: red;

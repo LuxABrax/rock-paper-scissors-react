@@ -3,12 +3,13 @@ const express = require('express');
 const socketio = require('socket.io');
 const cors = require('cors');
 
-const { userJoin } = require('./utils.js');
+const { addPlayerToRoom, removeUser, getRoom, getUser, calcResult, updateUserInput } = require('./utils.js');
 
 const PORT = process.env.PORT || 5002;
 
 
 const router = require('./router.js');
+const { SSL_OP_NO_TICKET } = require('constants');
 
 const app = express();
 const server = http.createServer(app);
@@ -17,35 +18,73 @@ const io = socketio(server);
 app.use(cors());
 app.use(router);
 
+
+
 io.on('connection', (socket) => {
     console.log('user connected');
-    socket.on('joinRoom', ({ roomname, username }) => {
 
-        let user = userJoin(socket.id, roomname, username);
+    socket.on('leaveRoom', () => {
+        let user = getUser(socket.id);
+
+        if (user) {
+            removeUser(socket.id);
+            let room = getRoom(user.roomName);
+            socket.to(user.roomName).emit('leftRoom', { players: room.users });
+            socket.leave(user.roomName);
+            console.log(`${user.username} left room: ${user.roomName}`);
+
+        }
+    });
+
+    socket.on('joinRoom', ({ roomName, username }) => {
+
+        let user = addPlayerToRoom(socket.id, username, roomName);
+
+
 
         //logger
-        console.log(user);
 
-        if (user.error || !username || !roomname) {
+        if (user.error || !username || !roomName) {
             socket.emit('err', user.error);
             return socket.disconnect(true);
         }
 
-        socket.join(user.roomname);
-        socket.broadcast
-            .to(user.roomname)
-            .emit(
-                'message',
-                `${user.username} has joined room: ${user.roomname}`
-            );
+        socket.join(user.user.roomName);
+
+        //send back all players in room, current user username and roomName
+        let room = getRoom(roomName);
+
+        //emit only emits to current socket, to emits to all users in room exept the user
+        socket.to(roomName).emit('userJoined', { username: user.user.username, roomName: user.user.roomName, players: room.users });
+        socket.emit('userJoined', { username: user.user.username, roomName: user.user.roomName, players: room.users });
+
+
+        /* if (user.gameReady) {
+            console.log('gameready');
+            socket.to(user.user.roomName).emit('gameReady', 'game ready!');
+        } */
+
+
+    });
+
+    socket.on('result', ({ result, username, roomName }) => {
+
+        //const success = updateUserInput(socket.id, result);
+
+
+
+        socket.to(roomName).emit('results', { opponentResult: result });
+
+        console.log(result, username, roomName);
 
     });
 
 
-
-
-    socket.on('disconnect', ({ username, roomname }) => {
-        console.log(`${username} disconnected`);
+    socket.on('disconnect', () => {
+        let user = getUser(socket.id);
+        if (user) console.log(`${user.username} disconnected ${user.roomName}`);
+        console.log('disconnected');
+        removeUser(socket.id);
     });
 })
 
