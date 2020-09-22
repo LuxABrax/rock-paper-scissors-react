@@ -14,27 +14,29 @@ const RoomPage = ({ location }) => {
 	const [user, setUser] = useState();
 	const [users, setUsers] = useState(0);
 	const [counter, setCounter] = useState(0);
-	const [active, setActive] = useState('none');
+	const [active, setActive] = useState("none");
 
 	useEffect(() => {
 		socket = io(ENDPOINT);
 
-		socket.on('gameReady', (message) => {
-			console.log(message, 'gjhghg');
-		})
+		socket.on("gameReady", message => {
+			console.log(message, "gjhghg");
+		});
 
-		socket.on('leftRoom', ({ players }) => {
+		socket.on("leftRoom", ({ players }) => {
 			console.log(players);
 			setUsers([...players]);
 		});
 
-		socket.on('userJoined', ({ username, roomName, players }) => {
+		socket.on("userJoined", ({ username, roomName, players }) => {
 			setUsers([...players]);
 			console.log(users, username, roomName);
 		});
 
-		socket.on('results', ({ opponentResult }) => {
-			console.log(...active);
+		socket.on("results", ({ myResult, opponentResult }) => {
+			console.log("my:", myResult);
+			console.log("opp:", opponentResult);
+			console.log(`me: ${myResult}, he: ${opponentResult}`);
 		});
 
 		return () => {
@@ -43,23 +45,27 @@ const RoomPage = ({ location }) => {
 		};
 	}, []);
 
-
 	const joinRoom = (username, roomName, e) => {
 		e.preventDefault();
-		console.log(username, roomName)
-		setUser(({ roomName, username }));
-		socket.emit('leaveRoom');
+		console.log(username, roomName);
+		setUser({ roomName, username });
+		socket.emit("leaveRoom");
 
 		socket.emit("joinRoom", { roomName, username }, () => {
 			/* setUsers([...users, username]); */
 		});
 	};
 
-	const sendResult = (result) => {
+	const sendResult = result => {
+		setActive(result);
+		console.log("result: ", result, " active: ", active);
 		if (user.username && user.roomName) {
-
 			console.log(result, user.roomName, user.username);
-			socket.emit('result', { result, username: user.username, roomName: user.roomName });
+			socket.emit("result", {
+				result,
+				username: user.username,
+				roomName: user.roomName,
+			});
 		}
 	};
 
@@ -80,13 +86,11 @@ const RoomPage = ({ location }) => {
 					break;
 				default:
 			}
-	
+
 			return result;
-	
+
 		} */
 	//! Timer !
-
-
 
 	/* useEffect(() => {
 		const timer =
@@ -113,21 +117,36 @@ const RoomPage = ({ location }) => {
 				<div className='sidebar-container'>
 					<Sidebar joinRoom={joinRoom} />
 				</div>
-				{user ? <div className='room-board'>
-					<HandOptions player={2} sendResult={sendResult} setActive={setActive} active={active} />
-					<GameScreen />
-					<HandOptions player={1} sendResult={sendResult} setActive={setActive} active={active} />
-				</div>
-					: <h1 className="room-board enter-room">Enter Room!</h1>}
+				{user ? (
+					<div className='room-board'>
+						<HandOptions
+							player={2}
+							sendResult={sendResult}
+							active={active}
+						/>
+						<GameScreen />
+						<HandOptions
+							player={1}
+							sendResult={sendResult}
+							active={active}
+						/>
+					</div>
+				) : (
+					<h1 className='room-board enter-room'>Enter Room!</h1>
+				)}
 				{/* <div className='room-board'>
 					<HandOptions player={2} sendResult={sendResult} />
 					<GameScreen />
 					<HandOptions player={1} sendResult={sendResult} />
 				</div> */}
 				<div className='sidebar-info-container'>
-					<div className="roomInformation">
-						<h2 className="roomName__info">Room: {user ? user.roomName : ''}</h2>
-						<h3 className="playes_info">Players: {users ? users.length : users}</h3>
+					<div className='roomInformation'>
+						<h2 className='roomName__info'>
+							Room: {user ? user.roomName : ""}
+						</h2>
+						<h3 className='playes_info'>
+							Players: {users ? users.length : users}
+						</h3>
 					</div>
 				</div>
 			</div>
