@@ -1,6 +1,5 @@
 let rooms = [];
 
-
 /* //check if user exists in rooms
 const userExists = (users, username) => {
     if (users.length !== 0) {
@@ -51,112 +50,106 @@ const getRoom = (roomName) => {
 
     return false;
 } */
-const addUserInput = (input, socketID) => {
-
-}
+const addUserInput = (input, socketID) => {};
 const updateUserInput = (socketID, input) => {
-    let success = false;
+	let success = false;
 
-    rooms.forEach(room => {
+	rooms.forEach(room => {
+		room.users.forEach(user => {
+			if (user.socketID === socketID) {
+				user.input = input;
+				success = true;
+			}
+		});
+	});
 
-        room.users.forEach(user => {
-            if (user.socketID === socketID) {
-                user.input = input;
-                success = true;
-            }
-        });
+	return success;
+};
 
-    });
+const getRoom = roomName => {
+	let room;
+	rooms.forEach(oneRoom => {
+		if (oneRoom.name === roomName) room = oneRoom;
+	});
 
-    return success;
-}
+	if (!room) return "Not Found!";
 
-
-const getRoom = (roomName) => {
-    let room;
-    rooms.forEach(oneRoom => {
-        if (oneRoom.name === roomName) room = oneRoom;
-    });
-
-    if (!room) return 'Not Found!';
-
-    return room;
-}
+	return room;
+};
 
 const addPlayerToRoom = (socketID, username, roomName) => {
+	createRoom(roomName);
+	let user = addUser(username, roomName, socketID);
+	console.log(rooms);
+	if (user.error) return { error: user.error };
 
-    createRoom(roomName);
-    let user = addUser(username, roomName, socketID);
+	return user;
+};
 
-    if (user.error) return { error: user.error };
+const checkPlayersInRoom = roomName => {
+	let gameReady = false;
 
-    return user
+	rooms.forEach(room => {
+		if (room.name === roomName && room.users.length >= 2) gameReady = true;
+	});
 
+	return gameReady;
+};
 
-}
+const createRoom = roomName => {
+	let exists;
 
-const checkPlayersInRoom = (roomName) => {
-    let gameReady = false;
+	rooms.forEach(room => {
+		if (room.name === roomName) exists = true;
+	});
 
-    rooms.forEach(room => {
-        if (room.name === roomName && room.users.length >= 2) gameReady = true;
-    });
+	if (exists) return { created: false };
 
-    return gameReady;
-}
+	rooms.push({ name: roomName, users: [] });
 
-
-const createRoom = (roomName) => {
-    let exists;
-
-    rooms.forEach(room => {
-        if (room.name === roomName) exists = true;
-    });
-
-    if (exists) return { created: false };
-
-    rooms.push({ name: roomName, users: [] });
-
-    return { room: { name: roomName, users: [] }, created: true };
-}
+	return { room: { name: roomName, users: [] }, created: true };
+};
 
 const addUser = (username, roomName, socketID) => {
+	let valid = checkUser(username, roomName);
 
-    let valid = checkUser(username, roomName);
+	if (!valid)
+		return {
+			error: "username taken",
+			user: { username, roomName, socketID },
+		};
 
-    if (!valid) return { error: 'username taken', user: { username, roomName, socketID } };
+	rooms.forEach(room => {
+		if (room.name === roomName) {
+			room.users.push({ username, roomName, socketID });
+		}
+	});
 
-    rooms.forEach(room => {
-        if (room.name === roomName) {
-            room.users.push({ username, roomName, socketID });
-        }
-    });
+	if (checkPlayersInRoom(roomName))
+		return { gameReady: true, user: { username, roomName, socketID } };
 
-    if (checkPlayersInRoom(roomName)) return { gameReady: true, user: { username, roomName, socketID } };
-
-    return { user: { username, roomName, socketID } };
-
+	return { user: { username, roomName, socketID } };
 };
 
 const checkUser = (username, roomName) => {
-    let oneRoom = false;
+	let oneRoom = false;
 
-    rooms.forEach(room => {
-        if (room.name === roomName) oneRoom = room;
-    });
+	rooms.forEach(room => {
+		if (room.name === roomName) oneRoom = room;
+	});
 
-    if (!oneRoom) return true; //return true meaning username is good
+	if (!oneRoom) return true; //return true meaning username is good
 
-    let exists;
+	let exists;
 
-    oneRoom.users.forEach(user => {
-        if (user.username === username) exists = true;
-    });
+	oneRoom.users.forEach(user => {
+		if (user.username === username) exists = true;
+	});
 
-    if (exists) return false; //username is taken
+	if (exists) return false; //username is taken
 
-    return true;
-}
+	return true;
+};
 
 /* const removeUser = (username, roomName) => {
 
@@ -169,31 +162,29 @@ const checkUser = (username, roomName) => {
 
 } */
 
-const getUser = (socketID) => {
-    let user;
-    rooms.forEach(room => {
-        user = room.users.find(user => user.socketID === socketID);
-    });
+const getUser = socketID => {
+	let user;
+	rooms.forEach(room => {
+		user = room.users.find(user => user.socketID === socketID);
+	});
 
-    if (user) return user;
+	if (user) return user;
 
-    return undefined;
-}
+	return undefined;
+};
 
-const removeUser = (socketID) => {
+const removeUser = socketID => {
+	rooms.forEach(room => {
+		room.users = room.users.filter(user => user.socketID !== socketID);
+	});
 
-    rooms.forEach(room => {
-        room.users = room.users.filter(user => user.socketID !== socketID);
-    });
+	return rooms;
+};
 
-    return rooms;
-}
+const removeRoom = roomName => {
+	rooms = rooms.filter(room => room.name !== roomName);
 
-const removeRoom = (roomName) => {
-
-    rooms = rooms.filter(room => room.name !== roomName);
-
-    return rooms;
+	return rooms;
 };
 
 /* RESULT CALC */
@@ -202,79 +193,90 @@ const removeRoom = (roomName) => {
     if (user)
 }; */
 
-
-
 const calcResult = (userInput, opponentInput) => {
-    let result = { userWon: false, opponentWon: false };
-    switch (userInput) {
-        case 'rock':
-            if (opponentInput === 'paper') result.oponentWon = true;
-            if (opponentInput === 'scissor') result.userWon = true;
-            break;
-        case 'paper':
-            if (opponentInput === 'rock') result.userWon = true;
-            if (opponentInput === 'scissor') result.opponentWon = true;
-            break;
-        case 'scissor':
-            if (opponentInput === 'rock') result.opponentWon = true;
-            if (opponentInput === 'paper') result.userWon = true;
-            break;
-        default:
-    }
+	let result = { userWon: false, opponentWon: false };
+	switch (userInput) {
+		case "rock":
+			if (opponentInput === "paper") result.oponentWon = true;
+			if (opponentInput === "scissor") result.userWon = true;
+			break;
+		case "paper":
+			if (opponentInput === "rock") result.userWon = true;
+			if (opponentInput === "scissor") result.opponentWon = true;
+			break;
+		case "scissor":
+			if (opponentInput === "rock") result.opponentWon = true;
+			if (opponentInput === "paper") result.userWon = true;
+			break;
+		default:
+	}
 
-    return result;
-
-}
-
-const storeInput = (input, username, roomName) => {
-
-    rooms.forEach(room => {
-        if (room.name === roomName) {
-
-            room.users.forEach(user => {
-
-                if (user.username === username) {
-                    user.input = input;
-                }
-
-            });
-
-        }
-
-    });
-
+	return result;
 };
 
-const validateInput = () => {
+const storeInput = (input, username, roomName) => {
+	let results = {
+		my: "",
+		opp: "",
+	};
+	rooms.forEach(room => {
+		if (room.name === roomName) {
+			room.users.forEach(user => {
+				if (user.username === username) {
+					user.input = input;
+					results.my = user.input;
+				} else {
+					results.opp = user.input;
+				}
+			});
+		}
+	});
+	return results;
+};
+// const getInput = (roomName, username) =>{
+//     let results={
+//         my:'',
+//         opp:''
+//     }
+//     rooms.forEach(room => {
+//         if(room.name === roomName){
+//             room.users.forEach(user =>{
+//                 if (user.username === username) {
+//                     results.my = user.input;
+//                 } else {
+//                     results.opp = user.input;
+//                 }
+//             })
+//         }
+//     })
+//     console.log(results)
+// }
 
-}
-
-
+const validateInput = () => {};
 
 /* ----END RESULT CALC----- */
-
-
-/* console.log(createRoom('room'));
-console.log(createRoom('room'));
+/*
+console.log(createRoom("room"));
+console.log(createRoom("room"));
 
 //addUser('getrobin', 'room', 'id');
-console.log(addUser('getrobin', 'room', 'id'));
-console.log(addUser('getrobin', 'room', 'id'));
-console.log(addUser('getrobin1', 'room', 'id1'));
+console.log(addUser("getrobin", "room", "id"));
+console.log(addUser("getrobin", "room", "id"));
+console.log(addUser("getrobin1", "room", "id1"));
+storeInput("rock", "getrobin", "room");
+storeInput("paper", "getrobin1", "room");
 //console.log(removeUser('id'));
 //removeRoom('room');
-console.log(getRoom('room'));
+console.log(getRoom("room"));
 console.log(rooms[0].users);
-console.log(rooms); */
-
-
-
+console.log(rooms);*/
 
 module.exports = {
-    addPlayerToRoom,
-    removeUser,
-    getRoom,
-    getUser,
-    calcResult,
-    updateUserInput,
-}
+	addPlayerToRoom,
+	removeUser,
+	getRoom,
+	getUser,
+	storeInput,
+	calcResult,
+	updateUserInput,
+};
