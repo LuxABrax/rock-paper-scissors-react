@@ -8,7 +8,6 @@ import {
 
 import "./App.css";
 
-import Login from "./pages/Login";
 import RoomPage from "./pages/RoomPage";
 
 function App() {
@@ -16,9 +15,8 @@ function App() {
 		<div className='App'>
 			<Router>
 				<Switch>
-					<Route path='/' exact component={Login} />
 					<Route path='/room' exact component={RoomPage} />
-					<Redirect to='/' />
+					<Redirect to='/room' />
 				</Switch>
 			</Router>
 		</div>

@@ -3,8 +3,35 @@
 	background-color: mediumspringgreen;
 	width: 100%;
 	text-align: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
 }
-.positions {
+.column {
+	flex: 0.3;
+}
+.userTitle {
+	background-color: white;
+	width: 200px;
+	padding: 10px;
+	margin: 4px;
+}
+.myName {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+}
+.opName {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+.timer {
+	color: red;
+}
+/* .positions {
 	height: 100%;
 	width: 20%;
 	margin: 0 auto;
@@ -18,4 +45,4 @@
 	width: 120px;
 	height: 120px;
 	background-color: yellow;
-}
+} */
