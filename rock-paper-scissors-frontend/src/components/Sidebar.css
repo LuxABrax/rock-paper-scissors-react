@@ -19,16 +19,16 @@
 .join-form > label {
 	color: mediumseagreen;
 	font-weight: bold;
-	font-size: 24px;
+	font-size: 20px;
 	text-align: center;
-	width: 200px;
+	width: 180px;
 	padding: 2px;
 	margin: 0 auto;
 }
 .join-input {
-	width: 200px;
-	height: 40px;
-	font-size: 30px;
+	width: 180px;
+	height: 30px;
+	font-size: 24px;
 	margin: 5px auto;
 	padding: 2px;
 	border: 2px solid mediumseagreen;
