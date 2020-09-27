@@ -173,16 +173,18 @@ const getUser = socketID => {
 	return undefined;
 };
 const userReady = roomname => {
+	console.log("room: ", roomname);
 	let oneRoom;
 
 	rooms.forEach(room => {
 		if (room.name === roomname) {
 			if (!room.que) room.que = 0;
 			room.que = room.que + 1;
+			console.log(room.que);
 			oneRoom = room;
 		}
 	});
-
+	console.log("one room: ", oneRoom);
 	return oneRoom;
 };
 
