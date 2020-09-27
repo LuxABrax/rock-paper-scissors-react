@@ -11,6 +11,7 @@ const {
 	storeInput,
 	calcResult,
 	updateUserInput,
+	userReady,
 } = require("./utils.js");
 
 const PORT = process.env.PORT || 5002;
@@ -71,6 +72,15 @@ io.on("connection", socket => {
             console.log('gameready');
             socket.to(user.user.roomName).emit('gameReady', 'game ready!');
         } */
+	});
+
+	socket.on("userReady", ({ roomName }) => {
+		const room = userReady(roomName);
+		if (room.que === 2) {
+			socket.to(roomName).emit("gameReady");
+			socket.emit("gameReady");
+			room.que = 0;
+		}
 	});
 
 	socket.on("result", ({ result, username, roomName }) => {

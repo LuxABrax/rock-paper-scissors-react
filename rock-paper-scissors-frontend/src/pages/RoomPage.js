@@ -11,11 +11,11 @@ let socket;
 const RoomPage = ({ location }) => {
 	const ENDPOINT = "localhost:5002";
 	const [sideBar, setSideBar] = useState(false);
-	const [hands, setHands] = useState(0);
 	const [user, setUser] = useState();
 	const [users, setUsers] = useState(0);
-	const [counter, setCounter] = useState(0);
 	const [active, setActive] = useState("none");
+	const [mode, setMode] = useState("prep");
+	const [gameReady, setGameReady] = useState(false);
 
 	const [result, setResult] = useState({
 		myWins: 0,
@@ -38,6 +38,10 @@ const RoomPage = ({ location }) => {
 			setUsers([...players]);
 			console.log(users, username, roomName);
 		});
+		socket.on("gameReady", () => {
+			setGameReady(true);
+			setMode("time");
+		});
 
 		socket.on("results", ({ iWin, myResult, opponentResult }) => {
 			if (iWin) {
@@ -59,6 +63,7 @@ const RoomPage = ({ location }) => {
 				myResult,
 				opponentResult,
 			});
+			setMode("result");
 			console.log("my:", myResult);
 			console.log("opp:", opponentResult);
 			console.log(`me: ${myResult}, he: ${opponentResult}`);
@@ -84,7 +89,9 @@ const RoomPage = ({ location }) => {
 		});
 		setSideBar(false);
 	};
-
+	const userReady = () => {
+		socket.emit("userReady", user.roomName);
+	};
 	const sendResult = result => {
 		setActive(result);
 		console.log("result: ", result, " active: ", active);
@@ -142,7 +149,15 @@ const RoomPage = ({ location }) => {
 							sendResult={sendResult}
 							active={active}
 						/>
-						<GameScreen user={user} users={users} result={result} />
+						<GameScreen
+							mode={mode}
+							setMode={setMode}
+							userReady={userReady}
+							gameReady={gameReady}
+							user={user}
+							users={users}
+							result={result}
+						/>
 						<HandOptions
 							player={1}
 							sendResult={sendResult}

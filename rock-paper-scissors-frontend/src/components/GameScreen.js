@@ -1,13 +1,27 @@
 import React, { useEffect, useState } from "react";
 import "./GameScreen.css";
-const GameScreen = ({ user, users, result }) => {
+const GameScreen = ({
+	mode,
+	setMode,
+	userReady,
+	gameReady,
+	user,
+	users,
+	result,
+}) => {
 	const [counter, setCounter] = useState(0);
 	const [round, setRound] = useState(1);
-	const [mode, setMode] = useState("prepare");
+
 	useEffect(() => {
 		const timer =
-			counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-		return () => clearInterval(timer);
+			counter > 0 &&
+			setInterval(() => {
+				setCounter(counter - 1);
+				if (counter === 0) setMode("fight");
+			}, 1000);
+		return () => {
+			clearInterval(timer);
+		};
 	}, [counter]);
 	let comp;
 	switch (mode) {
@@ -16,14 +30,19 @@ const GameScreen = ({ user, users, result }) => {
 				<button
 					className='timer'
 					onClick={() => {
-						setCounter(5);
+						userReady();
+						setMode("wait");
 					}}
 				>
-					start
+					Ready
 				</button>
 			);
 			break;
+		case "wait":
+			comp = <h1>Waiting for opponent...</h1>;
+			break;
 		case "time":
+			setCounter(5);
 			comp = <h1 className='timer'>{counter}</h1>;
 			break;
 		case "fight":
