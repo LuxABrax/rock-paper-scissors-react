@@ -25,10 +25,6 @@ const RoomPage = ({ location }) => {
 	useEffect(() => {
 		socket = io(ENDPOINT);
 
-		socket.on("gameReady", message => {
-			console.log(message, "gjhghg");
-		});
-
 		socket.on("leftRoom", ({ players }) => {
 			console.log(players);
 			setUsers([...players]);
