@@ -74,7 +74,7 @@ io.on("connection", socket => {
         } */
 	});
 
-	socket.on("userReady", ({ roomName }) => {
+	socket.on("userReady", roomName => {
 		const room = userReady(roomName);
 		if (room.que === 2) {
 			socket.to(roomName).emit("gameReady");
