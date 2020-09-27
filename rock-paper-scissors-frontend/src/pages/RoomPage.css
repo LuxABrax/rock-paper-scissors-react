@@ -8,7 +8,6 @@
 }
 .sidebar-container {
 	flex: 0.15;
-	
 }
 
 .sidebar-info-container {
@@ -42,7 +41,8 @@
 	text-align: center;
 	margin: 0 auto;
 }
-.home-btn {
+.room-btn {
+	display: none;
 	width: 60px;
 	height: 30px;
 	font-size: 20px;
@@ -60,11 +60,22 @@
 		flex: 0;
 		display: none;
 	}
+	.sidebar-open {
+		flex: 0.2;
+		z-index: 30;
+		display: flex;
+		position: absolute;
+		left: 0;
+		background-color: white;
+	}
 	.sidebar-info-container {
 		flex: 0;
 		display: none;
 	}
 	.room-board {
 		flex: 1;
+	}
+	.room-btn {
+		display: flex;
 	}
 }

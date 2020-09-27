@@ -76,10 +76,13 @@ io.on("connection", socket => {
 	socket.on("result", ({ result, username, roomName }) => {
 		//const success = updateUserInput(socket.id, result);
 		let results = storeInput(result, username, roomName);
+		let rez = calcResult(result, results.opp);
 
-		socket
-			.to(roomName)
-			.emit("results", { myResult: results.opp, opponentResult: result });
+		socket.to(roomName).emit("results", {
+			iWin: rez.userWon,
+			myResult: results.opp,
+			opponentResult: result,
+		});
 
 		console.log(result, username, roomName);
 	});

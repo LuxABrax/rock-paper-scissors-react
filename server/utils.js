@@ -197,7 +197,7 @@ const calcResult = (userInput, opponentInput) => {
 	let result = { userWon: false, opponentWon: false };
 	switch (userInput) {
 		case "rock":
-			if (opponentInput === "paper") result.oponentWon = true;
+			if (opponentInput === "paper") result.opponentWon = true;
 			if (opponentInput === "scissor") result.userWon = true;
 			break;
 		case "paper":

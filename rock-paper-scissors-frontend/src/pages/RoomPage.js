@@ -10,6 +10,7 @@ let socket;
 
 const RoomPage = ({ location }) => {
 	const ENDPOINT = "localhost:5002";
+	const [sideBar, setSideBar] = useState(false);
 	const [hands, setHands] = useState(0);
 	const [user, setUser] = useState();
 	const [users, setUsers] = useState(0);
@@ -33,10 +34,15 @@ const RoomPage = ({ location }) => {
 			console.log(users, username, roomName);
 		});
 
-		socket.on("results", ({ myResult, opponentResult }) => {
+		socket.on("results", ({ iWin, myResult, opponentResult }) => {
 			console.log("my:", myResult);
 			console.log("opp:", opponentResult);
 			console.log(`me: ${myResult}, he: ${opponentResult}`);
+			if (iWin) {
+				console.log("I won");
+			} else {
+				console.log("I lost");
+			}
 		});
 
 		return () => {
@@ -44,6 +50,9 @@ const RoomPage = ({ location }) => {
 			socket.off();
 		};
 	}, []);
+	const selectRoom = e => {
+		setSideBar(true);
+	};
 
 	const joinRoom = (username, roomName, e) => {
 		e.preventDefault();
@@ -54,6 +63,7 @@ const RoomPage = ({ location }) => {
 		socket.emit("joinRoom", { roomName, username }, () => {
 			/* setUsers([...users, username]); */
 		});
+		setSideBar(false);
 	};
 
 	const sendResult = result => {
@@ -100,9 +110,10 @@ const RoomPage = ({ location }) => {
 
 	return (
 		<div className='main'>
-			<Link to='/'>
-				<button className='home-btn'>Home</button>
-			</Link>
+			<button className='room-btn' onClick={() => selectRoom()}>
+				Room
+			</button>
+
 			<div className='cTimer'>
 				<button
 					onClick={() => {
@@ -114,7 +125,11 @@ const RoomPage = ({ location }) => {
 				<h1 className='timer'>{counter}</h1>
 			</div>
 			<div className='roomContainer'>
-				<div className='sidebar-container'>
+				<div
+					className={`${
+						sideBar ? "sidebar-open" : "sidebar-container"
+					}`}
+				>
 					<Sidebar joinRoom={joinRoom} />
 				</div>
 				{user ? (
