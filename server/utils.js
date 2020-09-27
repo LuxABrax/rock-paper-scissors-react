@@ -172,6 +172,19 @@ const getUser = socketID => {
 
 	return undefined;
 };
+const userReady = roomname => {
+	let oneRoom;
+
+	rooms.forEach(room => {
+		if (room.name === roomname) {
+			if (!room.que) room.que = 0;
+			room.que = room.que + 1;
+			oneRoom = room;
+		}
+	});
+
+	return oneRoom;
+};
 
 const removeUser = socketID => {
 	rooms.forEach(room => {
@@ -279,4 +292,5 @@ module.exports = {
 	storeInput,
 	calcResult,
 	updateUserInput,
+	userReady,
 };
