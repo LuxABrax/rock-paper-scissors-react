@@ -17,6 +17,11 @@ const RoomPage = ({ location }) => {
 	const [counter, setCounter] = useState(0);
 	const [active, setActive] = useState("none");
 
+	const [result, setResult] = useState({
+		myWins: 0,
+		opWins: 0,
+	});
+
 	useEffect(() => {
 		socket = io(ENDPOINT);
 
@@ -35,14 +40,28 @@ const RoomPage = ({ location }) => {
 		});
 
 		socket.on("results", ({ iWin, myResult, opponentResult }) => {
+			if (iWin) {
+				console.log("I won");
+				setResult({
+					...result,
+					myWins: result.myWins + 1,
+				});
+			} else {
+				console.log("I lost");
+				setResult({
+					...result,
+					opWins: result.opWins + 1,
+				});
+			}
+			setResult({
+				...result,
+				iWin,
+				myResult,
+				opponentResult,
+			});
 			console.log("my:", myResult);
 			console.log("opp:", opponentResult);
 			console.log(`me: ${myResult}, he: ${opponentResult}`);
-			if (iWin) {
-				console.log("I won");
-			} else {
-				console.log("I lost");
-			}
 		});
 
 		return () => {
@@ -102,28 +121,12 @@ const RoomPage = ({ location }) => {
 		} */
 	//! Timer !
 
-	/* useEffect(() => {
-		const timer =
-			counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-		return () => clearInterval(timer);
-	}, [counter]); */
-
 	return (
 		<div className='main'>
 			<button className='room-btn' onClick={() => selectRoom()}>
 				Room
 			</button>
 
-			<div className='cTimer'>
-				<button
-					onClick={() => {
-						setCounter(5);
-					}}
-				>
-					start
-				</button>
-				<h1 className='timer'>{counter}</h1>
-			</div>
 			<div className='roomContainer'>
 				<div
 					className={`${
@@ -139,7 +142,7 @@ const RoomPage = ({ location }) => {
 							sendResult={sendResult}
 							active={active}
 						/>
-						<GameScreen />
+						<GameScreen user={user} users={users} result={result} />
 						<HandOptions
 							player={1}
 							sendResult={sendResult}
