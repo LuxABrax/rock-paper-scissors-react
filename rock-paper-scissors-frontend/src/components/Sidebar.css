@@ -3,7 +3,7 @@
 	/* margin: 10px auto; */
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+
 	align-items: center;
 	border: 1px solid black;
 }
@@ -17,7 +17,8 @@
 }
 
 .join-form > label {
-	color: mediumseagreen;
+	/* color: mediumseagreen; */
+	color: black;
 	font-weight: bold;
 	font-size: 20px;
 	text-align: center;
@@ -31,7 +32,7 @@
 	font-size: 24px;
 	margin: 5px auto;
 	padding: 2px;
-	border: 2px solid mediumseagreen;
+	border: 2px solid  rgba(59, 39, 1, 0.824);
 	border-radius: 5px;
 }
 .join-btn {
@@ -42,8 +43,9 @@
 	margin: 0 auto;
 	margin-top: 20px;
 	text-align: center;
-	background-color: springgreen;
-	color: seagreen;
+	background-color: rgba(255,0,5,0.8239670868347339);
+	color: white;
 	border: 2px solid seagreen;
 	border-radius: 5px;
+	font-family: arcade;
 }

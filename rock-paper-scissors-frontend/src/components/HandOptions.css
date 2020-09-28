@@ -33,6 +33,11 @@
 	transform: scale(1.2);
 	border-color: red;
 }
+
+.signNotClickable {
+	pointer-events: none;
+}
+
 @media (max-width: 950px) {
 	.HandOptions {
 		width: 90%;
