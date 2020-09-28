@@ -223,7 +223,7 @@ const calcResult = (input1, input2) => {
 
 	switch (input1.input) {
 		case "rock":
-			if (input2.input === "scissor") {
+			if (input2.input === "scissors") {
 				input1.result = 'win';
 				input2.result = 'loss';
 			}
@@ -234,7 +234,7 @@ const calcResult = (input1, input2) => {
 				input2.result = 'loss';
 			}
 			break;
-		case "scissor":
+		case "scissors":
 			if (input2.input === "paper") {
 				input1.result = 'win';
 				input2.result = 'loss';
@@ -245,6 +245,16 @@ const calcResult = (input1, input2) => {
 
 	return [input1, input2];
 };
+
+const storeRoom = (room) => {
+	rooms.forEach(oneRoom => {
+		if (oneRoom.name === room.name) {
+			oneRoom = room;
+		}
+	});
+
+	return room;
+}
 
 const storeInput = (input, username, roomName, socketID) => {
 
@@ -306,4 +316,5 @@ module.exports = {
 	calcResult,
 	updateUserInput,
 	userReady,
+	storeRoom
 };
