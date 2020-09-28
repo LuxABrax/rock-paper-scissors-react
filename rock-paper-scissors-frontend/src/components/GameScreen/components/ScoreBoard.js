@@ -21,7 +21,7 @@ export default function ScoreBoard({ user, results, socketID }) {
                 console.log("I lost", points);
                 setScore({ ...score, user: points });
 
-            } else {
+            } else if (result === 'loss') {
                 let points = score.opponent + 1;
                 console.log("I lost", points);
                 setScore({ ...score, opponent: points });

@@ -58,6 +58,12 @@ const GameScreen = ({
 			};
 		}, [counter]); */
 
+	const displayResult = (result) => {
+		if (result === 'draw') return 'Draw!';
+		if (result === 'win') return 'You Won!';
+		if (result === 'loss') return 'You Lost!';
+	}
+
 	let comp;
 
 	switch (mode) {
@@ -91,7 +97,7 @@ const GameScreen = ({
 
 		case "result":
 			comp = (<>
-				<h1>{score.result === 'win' ? "You Win!" : "You Lose!"}</h1>
+				<h1>{displayResult(score.result)}</h1>
 				<button
 					className='timer'
 					onClick={() => {
