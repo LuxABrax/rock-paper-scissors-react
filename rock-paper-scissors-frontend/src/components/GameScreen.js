@@ -4,26 +4,43 @@ const GameScreen = ({
 	mode,
 	setMode,
 	userReady,
-	gameReady,
 	user,
 	users,
-	result,
+	score,
 }) => {
-	const [counter, setCounter] = useState(0);
+	//const [counter, setCounter] = useState(0);
 	const [round, setRound] = useState(1);
+	const [counter, setCounter] = useState(3);
+	//let counter = 3;
 
-	useEffect(() => {
-		const timer =
-			counter > 0 &&
-			setInterval(() => {
-				setCounter(counter - 1);
-				if (counter === 0) setMode("fight");
-			}, 1000);
-		return () => {
-			clearInterval(timer);
-		};
-	}, [counter]);
+
+	const startTimer = () => {
+		let timer = setInterval(() => {
+
+			setCounter(counter - 1);
+
+			if (counter === 0) {
+				setMode('fight');
+				clearInterval(timer);
+			}
+
+		}, 1000);
+	}
+
+	/* 	useEffect(() => {
+			const timer =
+				counter > 0 &&
+				setInterval(() => {
+					//setCounter(counter - 1);
+					if (counter === 0) setMode("fight");
+				}, 1000);
+			return () => {
+				clearInterval(timer);
+			};
+		}, [counter]); */
+
 	let comp;
+
 	switch (mode) {
 		case "prep":
 			comp = (
@@ -38,21 +55,28 @@ const GameScreen = ({
 				</button>
 			);
 			break;
+
 		case "wait":
 			comp = <h1>Waiting for opponent...</h1>;
 			break;
+
 		case "time":
-			setCounter(5);
+			//setCounter(5);
+			startTimer();
 			comp = <h1 className='timer'>{counter}</h1>;
 			break;
+
 		case "fight":
 			comp = <h1>Choose your hand</h1>;
 			break;
+
 		case "result":
-			comp = <h1>`${result.iWin ? "You Win!" : "You Lose!"}`</h1>;
+			comp = <h1>{score.result === 'win' ? "You Win!" : "You Lose!"}</h1>;
+
 		default:
 			break;
 	}
+
 	return (
 		<div className='gameContainer'>
 			<div className='column'>
@@ -64,7 +88,7 @@ const GameScreen = ({
 					{comp ? comp : "Enter Room"}
 				</div>
 				<div className='score-container'>
-					{`${result.myWins} : ${result.opWins}`}
+					{`${score.myWins} : ${score.opWins}`}
 				</div>
 			</div>
 			<div className='column'>

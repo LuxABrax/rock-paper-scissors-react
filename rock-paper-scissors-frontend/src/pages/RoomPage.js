@@ -13,11 +13,11 @@ const RoomPage = ({ location }) => {
 	const [sideBar, setSideBar] = useState(false);
 	const [user, setUser] = useState();
 	const [users, setUsers] = useState(0);
-	const [active, setActive] = useState("none");
+	//const [active, setActive] = useState("none");
 	const [mode, setMode] = useState("prep");
 	const [gameReady, setGameReady] = useState(false);
 
-	const [result, setResult] = useState({
+	const [score, setScore] = useState({
 		myWins: 0,
 		opWins: 0,
 	});
@@ -39,30 +39,34 @@ const RoomPage = ({ location }) => {
 			setMode("time");
 		});
 
-		socket.on("results", ({ iWin, myResult, opponentResult }) => {
-			if (iWin) {
+		socket.on("results", (results) => {
+			let result;
+			console.log('halobaba')
+			if (socket.id === results[0].socketID) {
+				result = results[0].result;
+			} else if (socket.id === results[1].socketID) {
+				result = results[1].result;
+			}
+			if (result === 'win') {
 				console.log("I won");
-				setResult({
-					...result,
-					myWins: result.myWins + 1,
+				setScore({
+					...score,
+					myWins: score.myWins + 1,
 				});
 			} else {
 				console.log("I lost");
-				setResult({
-					...result,
-					opWins: result.opWins + 1,
+				setScore({
+					...score,
+					opWins: score.opWins + 1,
 				});
 			}
-			setResult({
-				...result,
-				iWin,
-				myResult,
-				opponentResult,
+			setScore({
+				...score,
+				result
 			});
+
 			setMode("result");
-			console.log("my:", myResult);
-			console.log("opp:", opponentResult);
-			console.log(`me: ${myResult}, he: ${opponentResult}`);
+
 		});
 
 		return () => {
@@ -89,10 +93,9 @@ const RoomPage = ({ location }) => {
 		socket.emit("userReady", user.roomName);
 	};
 	const sendResult = result => {
-		setActive(result);
-		console.log("result: ", result, " active: ", active);
+
 		if (user.username && user.roomName) {
-			console.log(result, user.roomName, user.username);
+
 			socket.emit("result", {
 				result,
 				username: user.username,
@@ -132,9 +135,8 @@ const RoomPage = ({ location }) => {
 
 			<div className='roomContainer'>
 				<div
-					className={`${
-						sideBar ? "sidebar-open" : "sidebar-container"
-					}`}
+					className={`${sideBar ? "sidebar-open" : "sidebar-container"
+						}`}
 				>
 					<Sidebar joinRoom={joinRoom} />
 				</div>
@@ -143,7 +145,6 @@ const RoomPage = ({ location }) => {
 						<HandOptions
 							player={2}
 							sendResult={sendResult}
-							active={active}
 						/>
 						<GameScreen
 							mode={mode}
@@ -152,17 +153,16 @@ const RoomPage = ({ location }) => {
 							gameReady={gameReady}
 							user={user}
 							users={users}
-							result={result}
+							score={score}
 						/>
 						<HandOptions
 							player={1}
 							sendResult={sendResult}
-							active={active}
 						/>
 					</div>
 				) : (
-					<h1 className='room-board enter-room'>Enter Room!</h1>
-				)}
+						<h1 className='room-board enter-room'>Enter Room!</h1>
+					)}
 				{/* <div className='room-board'>
 					<HandOptions player={2} sendResult={sendResult} />
 					<GameScreen />
