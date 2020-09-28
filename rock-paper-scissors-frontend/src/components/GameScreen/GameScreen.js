@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./GameScreen.css";
+import Timer from './components/Timer';
+import ScoreBoard from './components/ScoreBoard';
 const GameScreen = ({
 	mode,
 	setMode,
@@ -7,14 +9,30 @@ const GameScreen = ({
 	user,
 	users,
 	score,
+	points,
+	userPoints,
+	opponentPoints,
+	results,
+	socketID
 }) => {
 	//const [counter, setCounter] = useState(0);
 	const [round, setRound] = useState(1);
-	const [counter, setCounter] = useState(3);
+	//const [counter, setCounter] = useState(3);
+	const [seconds, setSeconds] = useState(3);
+	const [isActive, setIsActive] = useState(true);
 	//let counter = 3;
 
+	/* function toggle() {
+		setIsActive(!isActive);
+	} */
 
-	const startTimer = () => {
+	function reset() {
+		setIsActive(false);
+	}
+
+
+
+	/* const startTimer = () => {
 		let timer = setInterval(() => {
 
 			setCounter(counter - 1);
@@ -25,7 +43,8 @@ const GameScreen = ({
 			}
 
 		}, 1000);
-	}
+	} */
+
 
 	/* 	useEffect(() => {
 			const timer =
@@ -49,6 +68,7 @@ const GameScreen = ({
 					onClick={() => {
 						userReady();
 						setMode("wait");
+						//toggle();
 					}}
 				>
 					Ready
@@ -62,8 +82,7 @@ const GameScreen = ({
 
 		case "time":
 			//setCounter(5);
-			startTimer();
-			comp = <h1 className='timer'>{counter}</h1>;
+			comp = <Timer isActive={isActive} setIsActive={setIsActive} setMode={setMode} />
 			break;
 
 		case "fight":
@@ -71,7 +90,21 @@ const GameScreen = ({
 			break;
 
 		case "result":
-			comp = <h1>{score.result === 'win' ? "You Win!" : "You Lose!"}</h1>;
+			comp = (<>
+				<h1>{score.result === 'win' ? "You Win!" : "You Lose!"}</h1>
+				<button
+					className='timer'
+					onClick={() => {
+						userReady();
+						setMode("wait");
+
+
+					}}
+				>
+					play again
+			</button>
+			</>
+			)
 
 		default:
 			break;
@@ -87,9 +120,7 @@ const GameScreen = ({
 				<div className='scoreBoard-comp'>
 					{comp ? comp : "Enter Room"}
 				</div>
-				<div className='score-container'>
-					{`${score.myWins} : ${score.opWins}`}
-				</div>
+				<ScoreBoard user={user} results={results} socketID={socketID} />
 			</div>
 			<div className='column'>
 				<div className='userTitle opName'>

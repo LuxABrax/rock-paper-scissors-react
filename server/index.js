@@ -12,6 +12,7 @@ const {
 	calcResult,
 	updateUserInput,
 	userReady,
+	storeRoom
 } = require("./utils.js");
 
 const PORT = process.env.PORT || 5002;
@@ -80,6 +81,7 @@ io.on("connection", socket => {
 			socket.to(roomName).emit("gameReady");
 			socket.emit("gameReady");
 			room.que = 0;
+			storeRoom(room);
 		}
 	});
 
@@ -93,6 +95,9 @@ io.on("connection", socket => {
 			console.log('in here', result[1].socketID, 'space', result[0].socketID);
 			socket.to(roomName).emit('results', result);
 			socket.emit('results', result);
+			console.log(result);
+			room.inputs = [];
+			storeRoom(room);
 			/* socket.to(result[0].socketID).emit('results', { result: result[0].result, opponentRes: result[1].input });
 			socket.to(result[1].socketID).emit('results', { result: result[1].result, opponentRes: result[0].input }); */
 		}
