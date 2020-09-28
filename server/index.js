@@ -69,9 +69,9 @@ io.on("connection", socket => {
 		});
 
 		/* if (user.gameReady) {
-            console.log('gameready');
-            socket.to(user.user.roomName).emit('gameReady', 'game ready!');
-        } */
+			console.log('gameready');
+			socket.to(user.user.roomName).emit('gameReady', 'game ready!');
+		} */
 	});
 
 	socket.on("userReady", roomName => {
@@ -85,15 +85,24 @@ io.on("connection", socket => {
 
 	socket.on("result", ({ result, username, roomName }) => {
 		//const success = updateUserInput(socket.id, result);
-		let results = storeInput(result, username, roomName);
-		let rez = calcResult(result, results.opp);
+		let room = storeInput(result, username, roomName, socket.id);
+		console.log('in here', room);
+		if (room.inputs.length === 2) {
 
-		socket.to(roomName).emit("results", {
-			iWin: rez.userWon,
+			let result = calcResult(room.inputs[0], room.inputs[1]);
+			console.log('in here', result[1].socketID, 'space', result[0].socketID);
+			socket.to(roomName).emit('results', result);
+			socket.emit('results', result);
+			/* socket.to(result[0].socketID).emit('results', { result: result[0].result, opponentRes: result[1].input });
+			socket.to(result[1].socketID).emit('results', { result: result[1].result, opponentRes: result[0].input }); */
+		}
+
+		/* socket.to(roomName).emit("results", {
+			result,
 			myResult: results.opp,
 			opponentResult: result,
 		});
-
+ */
 		console.log(result, username, roomName);
 	});
 

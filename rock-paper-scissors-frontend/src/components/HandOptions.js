@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import "./HandOptions.css";
-const HandOptions = ({ player, sendResult, active }) => {
-	//const [active, setActive] = useState('none');
+const HandOptions = ({ player, sendResult }) => {
+	const [active, setActive] = useState('none');
 
 	return (
 		<div className={`HandOptions player${player}`}>
 			<div
 				className={`Hand pos1 ${active === "rock" ? "active" : ""}`}
 				onClick={() => {
-					// setActive('rock');
+					setActive('rock');
 					sendResult("rock");
 				}}
 			>
@@ -17,7 +17,7 @@ const HandOptions = ({ player, sendResult, active }) => {
 			<div
 				className={`Hand pos1 ${active === "paper" ? "active" : ""}`}
 				onClick={() => {
-					// setActive('paper');
+					setActive('paper');
 					sendResult("paper");
 					console.log(active);
 				}}
@@ -27,7 +27,7 @@ const HandOptions = ({ player, sendResult, active }) => {
 			<div
 				className={`Hand pos1 ${active === "scissors" ? "active" : ""}`}
 				onClick={() => {
-					// setActive('scissors');
+					setActive('scissors');
 					sendResult("scissors");
 				}}
 			>

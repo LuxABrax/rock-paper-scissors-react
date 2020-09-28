@@ -1,37 +1,39 @@
+const { get } = require("http");
+
 let rooms = [];
 
 /* //check if user exists in rooms
 const userExists = (users, username) => {
-    if (users.length !== 0) {
-        return users.some((user, index, arr) => {
-            return user === username;
-        });
-    } else {
-        return false;
-    }
+	if (users.length !== 0) {
+		return users.some((user, index, arr) => {
+			return user === username;
+		});
+	} else {
+		return false;
+	}
 }
 
 //puts the user in the room if the username isnt taken
 const userJoin = (socketID, roomname, username) => {
 
-    let userExists;
+	let userExists;
 
-    if (rooms.length !== 0) {
-        rooms.forEach(oneRoom => {
-            if (oneRoom.name === roomname) {
-                if (!userExists(room.users, username) && oneRoom.users.length <= 2) {
-                    room.users.push({ socketID, username, roomname });
-                    return
-                } else {
-                    userExists = true;
-                }
-            }
-        })
-    }
-    console.log(rooms);
-    if (userExists) return { error: 'username already taken or room full', user: { socketID, username, roomname } };
+	if (rooms.length !== 0) {
+		rooms.forEach(oneRoom => {
+			if (oneRoom.name === roomname) {
+				if (!userExists(room.users, username) && oneRoom.users.length <= 2) {
+					room.users.push({ socketID, username, roomname });
+					return
+				} else {
+					userExists = true;
+				}
+			}
+		})
+	}
+	console.log(rooms);
+	if (userExists) return { error: 'username already taken or room full', user: { socketID, username, roomname } };
 
-    return { socketID, username, roomname };
+	return { socketID, username, roomname };
 }
 
 
@@ -42,15 +44,15 @@ const userJoin = (socketID, roomname, username) => {
 
 //gets one room, requires a roomname
 const getRoom = (roomName) => {
-    const room = rooms.forEach(room => {
-        if (room.name === roomName) return room;
-    })
+	const room = rooms.forEach(room => {
+		if (room.name === roomName) return room;
+	})
 
-    if (room != null) return room;
+	if (room != null) return room;
 
-    return false;
+	return false;
 } */
-const addUserInput = (input, socketID) => {};
+const addUserInput = (input, socketID) => { };
 const updateUserInput = (socketID, input) => {
 	let success = false;
 
@@ -153,11 +155,11 @@ const checkUser = (username, roomName) => {
 
 /* const removeUser = (username, roomName) => {
 
-    rooms.forEach(room => {
-        if (room.name === roomName) {
-            room.users = room.users.filter(user => user.username !== username);
-        }
-    });
+	rooms.forEach(room => {
+		if (room.name === roomName) {
+			room.users = room.users.filter(user => user.username !== username);
+		}
+	});
 
 
 } */
@@ -205,48 +207,57 @@ const removeRoom = roomName => {
 /* RESULT CALC */
 
 /* const calcResult = (result, socketID) => {
-    if (user)
+	if (user)
 }; */
 
-const calcResult = (userInput, opponentInput) => {
-	let result = { userWon: false, opponentWon: false };
-	switch (userInput) {
+const calcResult = (input1, input2) => {
+	input1.result = 'loss';
+	input2.result = 'win';
+
+	if (input1.input === input2.input) {
+		input1.result = 'draw';
+		input2.result = 'draw';
+
+		return [input1, input2];
+	}
+
+	switch (input1.input) {
 		case "rock":
-			if (opponentInput === "paper") result.opponentWon = true;
-			if (opponentInput === "scissor") result.userWon = true;
+			if (input2.input === "scissor") {
+				input1.result = 'win';
+				input2.result = 'loss';
+			}
 			break;
 		case "paper":
-			if (opponentInput === "rock") result.userWon = true;
-			if (opponentInput === "scissor") result.opponentWon = true;
+			if (input2.input === "rock") {
+				input1.result = 'win';
+				input2.result = 'loss';
+			}
 			break;
 		case "scissor":
-			if (opponentInput === "rock") result.opponentWon = true;
-			if (opponentInput === "paper") result.userWon = true;
+			if (input2.input === "paper") {
+				input1.result = 'win';
+				input2.result = 'loss';
+			}
 			break;
 		default:
 	}
 
-	return result;
+	return [input1, input2];
 };
 
-const storeInput = (input, username, roomName) => {
-	let results = {
-		my: "",
-		opp: "",
-	};
-	rooms.forEach(room => {
-		if (room.name === roomName) {
-			room.users.forEach(user => {
-				if (user.username === username) {
-					user.input = input;
-					results.my = user.input;
-				} else {
-					results.opp = user.input;
-				}
-			});
-		}
-	});
-	return results;
+const storeInput = (input, username, roomName, socketID) => {
+
+	let room = getRoom(roomName);
+
+	console.log(roomName, 'roomname jas', room);
+
+
+	if (!room.inputs) room.inputs = [];
+	room.inputs = [...room.inputs, { socketID, input }];
+
+
+	return room;
 };
 // const getInput = (roomName, username) =>{
 //     let results={
@@ -267,7 +278,7 @@ const storeInput = (input, username, roomName) => {
 //     console.log(results)
 // }
 
-const validateInput = () => {};
+const validateInput = () => { };
 
 /* ----END RESULT CALC----- */
 /*
