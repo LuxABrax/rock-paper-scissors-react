@@ -23,7 +23,7 @@ const RoomPage = ({ location }) => {
 		mywins: 0,
 		opWins: 0,
 	});
-	const [scoreB, setScoreB] = useState({ user: 0, opponent: 0, draw: 0 });
+
 	useEffect(() => {
 		socket = io(ENDPOINT);
 
@@ -125,8 +125,6 @@ const RoomPage = ({ location }) => {
 							score={score}
 							results={res}
 							socketID={socket.id}
-							scoreB={scoreB}
-							setScoreB={setScoreB}
 						/>
 						<HandOptions
 							player={1}

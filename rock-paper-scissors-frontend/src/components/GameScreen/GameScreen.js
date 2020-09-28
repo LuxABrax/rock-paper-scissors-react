@@ -10,8 +10,6 @@ const GameScreen = ({
 	users,
 	score,
 	points,
-	scoreB,
-	setScoreB,
 	userPoints,
 	opponentPoints,
 	results,
@@ -58,6 +56,11 @@ const GameScreen = ({
 		}, [counter]); */
 
 	let comp;
+	const displayResult = result => {
+		if (result === "draw") return "Draw!";
+		if (result === "win") return "You Won!";
+		if (result === "loss") return "You Lost!";
+	};
 
 	switch (mode) {
 		case "prep":
@@ -97,13 +100,7 @@ const GameScreen = ({
 		case "result":
 			comp = (
 				<>
-					<h1>
-						{score.result === "win"
-							? "You Win!"
-							: score.result === "loss"
-							? "You Lose!"
-							: "Draw!"}
-					</h1>
+					<h1>{displayResult(score.result)}</h1>
 					<button
 						className='timer'
 						onClick={() => {
@@ -113,15 +110,6 @@ const GameScreen = ({
 					>
 						play again
 					</button>
-					{mode == "result" && (
-						<ScoreBoard
-							user={user}
-							results={results}
-							socketID={socketID}
-							scoreB={scoreB}
-							setScoreB={setScoreB}
-						/>
-					)}
 				</>
 			);
 
@@ -139,6 +127,7 @@ const GameScreen = ({
 				<div className='scoreBoard-comp'>
 					{comp ? comp : "Enter Room"}
 				</div>
+				<ScoreBoard user={user} results={results} socketID={socketID} />
 			</div>
 			<div className='column'>
 				<div className='userTitle opName'>
