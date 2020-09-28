@@ -107,9 +107,8 @@ const RoomPage = ({ location }) => {
 
 			<div className='roomContainer'>
 				<div
-					className={`${
-						sideBar ? "sidebar-open" : "sidebar-container"
-					}`}
+					className={`${sideBar ? "sidebar-open" : "sidebar-container"
+						}`}
 				>
 					<Sidebar joinRoom={joinRoom} />
 				</div>
@@ -125,6 +124,7 @@ const RoomPage = ({ location }) => {
 							score={score}
 							results={res}
 							socketID={socket.id}
+							gameReady={gameReady}
 						/>
 						<HandOptions
 							player={1}
@@ -133,8 +133,8 @@ const RoomPage = ({ location }) => {
 						/>
 					</div>
 				) : (
-					<h1 className='room-board enter-room'>Enter Room!</h1>
-				)}
+						<h1 className='room-board enter-room'>Enter Room!</h1>
+					)}
 
 				{/* <div className='sidebar-info-container'>
 					<div className='roomInformation'>

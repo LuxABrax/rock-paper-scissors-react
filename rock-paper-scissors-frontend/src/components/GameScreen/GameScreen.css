@@ -1,6 +1,8 @@
 .gameContainer {
 	height: 300px;
-	background-color: mediumspringgreen;
+	/* background-color: mediumspringgreen; */
+	background: rgb(2,0,36);
+background: linear-gradient(20deg, rgba(2,0,36,0.927608543417367) 50%, rgba(255,0,5,0.8239670868347339) 50%);
 	width: 100%;
 	text-align: center;
 	display: flex;
@@ -13,7 +15,10 @@
 	flex: 0.3;
 }
 .userTitle {
-	background-color: white;
+	background-color: transparent;
+	color: white;
+	border: 1px solid black;
+	border-radius: 5px;
 	width: 200px;
 	padding: 10px;
 	margin: 4px;
@@ -22,14 +27,39 @@
 	position: absolute;
 	left: 0;
 	bottom: 0;
+	background-color: rgba(255,0,5,0.8239670868347339);
 }
 .opName {
 	position: absolute;
 	right: 0;
 	top: 0;
+	background-color: rgba(4, 0, 75, 0.928);
 }
 .timer {
 	color: red;
+}
+
+.column.scoreBoard {
+	border: 1px solid black;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.vS {
+	margin: 30% 0 0 0;
+	font-size: 10vh;
+	color: white;
+}
+
+.scoreBoard-comp {
+
+}
+
+.score {
+	width: 50%;
 }
 /* .positions {
 	height: 100%;
