@@ -9,53 +9,22 @@ const GameScreen = ({
 	user,
 	users,
 	score,
-	points,
-	userPoints,
-	opponentPoints,
 	results,
 	socketID,
+	gameReady
 }) => {
-	//const [counter, setCounter] = useState(0);
+
 	const [round, setRound] = useState(1);
-	//const [counter, setCounter] = useState(3);
 	const [seconds, setSeconds] = useState(3);
 	const [isActive, setIsActive] = useState(true);
-	//let counter = 3;
-
-	/* function toggle() {
-		setIsActive(!isActive);
-	} */
 
 	function reset() {
 		setIsActive(false);
 	}
 
-	/* const startTimer = () => {
-		let timer = setInterval(() => {
-
-			setCounter(counter - 1);
-
-			if (counter === 0) {
-				setMode('fight');
-				clearInterval(timer);
-			}
-
-		}, 1000);
-	} */
-
-	/* 	useEffect(() => {
-			const timer =
-				counter > 0 &&
-				setInterval(() => {
-					//setCounter(counter - 1);
-					if (counter === 0) setMode("fight");
-				}, 1000);
-			return () => {
-				clearInterval(timer);
-			};
-		}, [counter]); */
 
 	let comp;
+
 	const displayResult = result => {
 		if (result === "draw") return "Draw!";
 		if (result === "win") return "You Won!";
@@ -70,7 +39,6 @@ const GameScreen = ({
 					onClick={() => {
 						userReady();
 						setMode("wait");
-						//toggle();
 					}}
 				>
 					Ready
@@ -79,7 +47,7 @@ const GameScreen = ({
 			break;
 
 		case "wait":
-			comp = <h1>Waiting for opponent...</h1>;
+			if (!gameReady) comp = <h1>Waiting for opponent...</h1>;
 			break;
 
 		case "time":
@@ -127,7 +95,7 @@ const GameScreen = ({
 				<div className='scoreBoard-comp'>
 					{comp ? comp : "Enter Room"}
 				</div>
-				<ScoreBoard user={user} results={results} socketID={socketID} />
+				<ScoreBoard classname="score" user={user} results={results} socketID={socketID} />
 			</div>
 			<div className='column'>
 				<div className='userTitle opName'>
@@ -140,19 +108,6 @@ const GameScreen = ({
 			</div>
 		</div>
 	);
-	{
-		/* <div className='time'>
-			<div className='cTimer'>
-				<button
-					onClick={() => {
-						setCounter(5);
-					}}
-				>
-					start
-				</button>
-				<h1 className='timer'>{counter}</h1>
-			</div> */
-	}
 };
 
 export default GameScreen;
