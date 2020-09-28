@@ -1,0 +1,23 @@
+.score-container {
+	max-width: 50px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	background-color: darkgrey;
+}
+.score {
+	padding: 2px;
+	font-weight: bolder;
+	font-size: 400;
+	background-color: lightgray;
+}
+.sw {
+	color: darkgreen;
+}
+.sd {
+	color: goldenrod;
+}
+.sl {
+	color: red;
+}

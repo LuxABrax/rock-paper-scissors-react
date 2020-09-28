@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./GameScreen.css";
-import Timer from './components/Timer';
-import ScoreBoard from './components/ScoreBoard';
+import Timer from "./components/Timer";
+import ScoreBoard from "./components/ScoreBoard";
 const GameScreen = ({
 	mode,
 	setMode,
@@ -10,10 +10,12 @@ const GameScreen = ({
 	users,
 	score,
 	points,
+	scoreB,
+	setScoreB,
 	userPoints,
 	opponentPoints,
 	results,
-	socketID
+	socketID,
 }) => {
 	//const [counter, setCounter] = useState(0);
 	const [round, setRound] = useState(1);
@@ -30,8 +32,6 @@ const GameScreen = ({
 		setIsActive(false);
 	}
 
-
-
 	/* const startTimer = () => {
 		let timer = setInterval(() => {
 
@@ -44,7 +44,6 @@ const GameScreen = ({
 
 		}, 1000);
 	} */
-
 
 	/* 	useEffect(() => {
 			const timer =
@@ -82,7 +81,13 @@ const GameScreen = ({
 
 		case "time":
 			//setCounter(5);
-			comp = <Timer isActive={isActive} setIsActive={setIsActive} setMode={setMode} />
+			comp = (
+				<Timer
+					isActive={isActive}
+					setIsActive={setIsActive}
+					setMode={setMode}
+				/>
+			);
 			break;
 
 		case "fight":
@@ -90,21 +95,35 @@ const GameScreen = ({
 			break;
 
 		case "result":
-			comp = (<>
-				<h1>{score.result === 'win' ? "You Win!" : "You Lose!"}</h1>
-				<button
-					className='timer'
-					onClick={() => {
-						userReady();
-						setMode("wait");
-
-
-					}}
-				>
-					play again
-			</button>
-			</>
-			)
+			comp = (
+				<>
+					<h1>
+						{score.result === "win"
+							? "You Win!"
+							: score.result === "loss"
+							? "You Lose!"
+							: "Draw!"}
+					</h1>
+					<button
+						className='timer'
+						onClick={() => {
+							userReady();
+							setMode("wait");
+						}}
+					>
+						play again
+					</button>
+					{mode == "result" && (
+						<ScoreBoard
+							user={user}
+							results={results}
+							socketID={socketID}
+							scoreB={scoreB}
+							setScoreB={setScoreB}
+						/>
+					)}
+				</>
+			);
 
 		default:
 			break;
@@ -120,7 +139,6 @@ const GameScreen = ({
 				<div className='scoreBoard-comp'>
 					{comp ? comp : "Enter Room"}
 				</div>
-				<ScoreBoard user={user} results={results} socketID={socketID} />
 			</div>
 			<div className='column'>
 				<div className='userTitle opName'>

@@ -19,7 +19,8 @@
 	flex-direction: row;
 }
 .player1 > .Hand:hover {
-	transform: scale(1.2);
+	transform: scale(1.1);
+	border-color: yellow;
 }
 .Hand > img {
 	height: 100%;
