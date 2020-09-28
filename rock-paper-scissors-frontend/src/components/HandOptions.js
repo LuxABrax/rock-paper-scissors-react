@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import "./HandOptions.css";
-const HandOptions = ({ player, sendResult }) => {
-	const [active, setActive] = useState('none');
+const HandOptions = ({ player, sendResult, mode }) => {
+	const [active, setActive] = useState("none");
 
 	return (
 		<div className={`HandOptions player${player}`}>
 			<div
 				className={`Hand pos1 ${active === "rock" ? "active" : ""}`}
 				onClick={() => {
-					setActive('rock');
-					sendResult("rock");
+					if (mode === "fight") {
+						setActive("rock");
+						sendResult("rock");
+					}
 				}}
 			>
 				<img src='/images/poopPoop.jpg' alt='rock' />
@@ -17,9 +19,11 @@ const HandOptions = ({ player, sendResult }) => {
 			<div
 				className={`Hand pos1 ${active === "paper" ? "active" : ""}`}
 				onClick={() => {
-					setActive('paper');
-					sendResult("paper");
-					console.log(active);
+					if (mode === "fight") {
+						setActive("paper");
+						sendResult("paper");
+						console.log(active);
+					}
 				}}
 			>
 				<img src='/images/poopPaper.jpg' alt='paper' />
@@ -27,8 +31,10 @@ const HandOptions = ({ player, sendResult }) => {
 			<div
 				className={`Hand pos1 ${active === "scissors" ? "active" : ""}`}
 				onClick={() => {
-					setActive('scissors');
-					sendResult("scissors");
+					if (mode === "fight") {
+						setActive("scissors");
+						sendResult("scissors");
+					}
 				}}
 			>
 				<img src='/images/pissScis.jpg' alt='scissors' />
