@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import io, { Socket } from "socket.io-client";
-import GameScreen from "../components/GameScreen";
+import GameScreen from "../components/GameScreen/GameScreen";
 import HandOptions from "../components/HandOptions";
 import { Link } from "react-router-dom";
 import "./RoomPage.css";
 import Sidebar from "../components/Sidebar";
+
 
 let socket;
 
@@ -17,10 +18,14 @@ const RoomPage = ({ location }) => {
 	const [mode, setMode] = useState("prep");
 	const [gameReady, setGameReady] = useState(false);
 
+	const [res, setRes] = useState(undefined);
 	const [score, setScore] = useState({
-		myWins: 0,
+		mywins: 0,
 		opWins: 0,
 	});
+
+
+
 
 	useEffect(() => {
 		socket = io(ENDPOINT);
@@ -35,12 +40,13 @@ const RoomPage = ({ location }) => {
 			console.log(users, username, roomName);
 		});
 		socket.on("gameReady", () => {
-			setGameReady(true);
+			//setGameReady(true);
 			setMode("time");
 		});
 
 		socket.on("results", (results) => {
 			let result;
+			setRes(results);
 			console.log('halobaba')
 			if (socket.id === results[0].socketID) {
 				result = results[0].result;
@@ -49,16 +55,10 @@ const RoomPage = ({ location }) => {
 			}
 			if (result === 'win') {
 				console.log("I won");
-				setScore({
-					...score,
-					myWins: score.myWins + 1,
-				});
+				//setPoints([points[0] + 1, points[1]]);
 			} else {
 				console.log("I lost");
-				setScore({
-					...score,
-					opWins: score.opWins + 1,
-				});
+				//setPoints([points[0], points[1] + 1]);
 			}
 			setScore({
 				...score,
@@ -94,7 +94,7 @@ const RoomPage = ({ location }) => {
 	};
 	const sendResult = result => {
 
-		if (user.username && user.roomName) {
+		if (user.username && user.roomName && mode === 'fight') {
 
 			socket.emit("result", {
 				result,
@@ -121,9 +121,9 @@ const RoomPage = ({ location }) => {
 					break;
 				default:
 			}
-
+	
 			return result;
-
+	
 		} */
 	//! Timer !
 
@@ -150,10 +150,11 @@ const RoomPage = ({ location }) => {
 							mode={mode}
 							setMode={setMode}
 							userReady={userReady}
-							gameReady={gameReady}
 							user={user}
 							users={users}
 							score={score}
+							results={res}
+							socketID={socket.id}
 						/>
 						<HandOptions
 							player={1}
