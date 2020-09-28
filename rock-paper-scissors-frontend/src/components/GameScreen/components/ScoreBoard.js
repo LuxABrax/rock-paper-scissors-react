@@ -2,13 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import "./ScoreBoard.css";
 
-export default function ScoreBoard({
-	scoreB,
-	setScoreB,
-	user,
-	results,
-	socketID,
-}) {
+export default function ScoreBoard({ user, results, socketID }) {
+	const [score, setScore] = useState({ user: 0, opponent: 0 });
 	useEffect(() => {
 		let result;
 		if (results) {
@@ -19,25 +14,21 @@ export default function ScoreBoard({
 			}
 
 			if (result === "win") {
-				let points = scoreB.user + 1;
+				let points = score.user + 1;
 				console.log("I won", points);
-				setScoreB({ ...scoreB, user: points });
-			} else if (result === "draw") {
-				let points = scoreB.draw + 1;
-				setScoreB({ ...scoreB, draw: points });
-			} else {
-				let points = scoreB.opponent + 1;
+				setScore({ ...score, user: points });
+			} else if (result === "loss") {
+				let points = score.opponent + 1;
 				console.log("I lost", points);
-				setScoreB({ ...scoreB, opponent: points });
+				setScore({ ...score, opponent: points });
 			}
 		}
 	}, [results]);
 
 	return (
 		<div className='score-container'>
-			<div className='score sw'>{scoreB.user}</div>
-			<div className='score sd'>{scoreB.draw}</div>
-			<div className='score sl'>{scoreB.opponent}</div>
+			<div className='score sw'>{score.user}</div>
+			<div className='score sl'>{score.opponent}</div>
 		</div>
 	);
 }
