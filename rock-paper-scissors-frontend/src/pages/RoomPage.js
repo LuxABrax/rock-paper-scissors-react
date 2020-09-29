@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import io, { Socket } from "socket.io-client";
 import GameScreen from "../components/GameScreen/GameScreen";
-import HandOptions from "../components/HandOptions";
+import HandOptions from "../components/HandOptions/HandOptions";
 import { Link } from "react-router-dom";
 import "./RoomPage.css";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../components/Sidebar/Sidebar";
 
 let socket;
 
