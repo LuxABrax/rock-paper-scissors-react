@@ -12,9 +12,9 @@ const HandOptions = ({ player, sendResult, theme, mode, color }) => {
 	const [clickable, setClickable] = useState(true); */
 	//const [signs, setSigns] = useState(['paper', 'scissors', 'rock']);
 	const [signs, setSigns] = useState([
-		{ sign: "rock", img: "images/rock.jpg" },
+		{ sign: "rock", img: "images/rock-basic.png" },
 		{ sign: "paper", img: "/images/paper-basic.png" },
-		{ sign: "scissors", img: "/images/scissors.png" },
+		{ sign: "scissors", img: "/images/scissors-basic.png" },
 	]);
 
 	/* 	const [themes, setThemes] = useState({
