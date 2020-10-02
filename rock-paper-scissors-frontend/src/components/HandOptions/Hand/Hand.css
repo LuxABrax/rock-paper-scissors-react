@@ -1,11 +1,19 @@
 .Hand {
 	width: 230px;
 	height: 230px;
-	border: 2px solid #ff2d31;
+	
 	border-radius: 50%;
 	cursor: pointer;
 	display: flex;
 	flex-direction: row;
+}
+
+.Hand.blue {
+    border: 5px solid #ff2d31;
+}
+
+.Hand.red {
+    border: 5px solid rgba(2,0,36,0.927608543417367);
 }
 
 img {
@@ -17,12 +25,13 @@ img {
 }
 .Hand.blue:hover {
 	transform: scale(1.1);
-	background-color: #ff2d31;
+	background-color: rgb(255, 217, 0);
 }
 .Hand.red:hover {
 	transform: scale(1.1);
-	background-color: #141334;
+	background-color: gold;
 }
+
 .Hand > img {
 	height: 100%;
 	border-radius: 50%;
