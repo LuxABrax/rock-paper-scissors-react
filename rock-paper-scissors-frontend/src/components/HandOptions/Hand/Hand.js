@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import './Hand.css';
 
-export default function Hand({ sign, mode, sendResult, img }) {
+export default function Hand({ sign, mode, sendResult, img, color }) {
 
     const [clickable, setClickable] = useState(true);
     const [active, setActive] = useState("none");
@@ -14,7 +14,7 @@ export default function Hand({ sign, mode, sendResult, img }) {
     return (
         <div>
             <div
-                className={`Hand pos1 ${clickable ? "" : "signNotClickable"} ${active === "rock" ? "active" : ""
+                className={`Hand ${color} pos1 ${clickable ? "" : "signNotClickable"} ${active === "rock" ? "active" : ""
                     }`}
                 onClick={() => {
                     if (mode === "fight") {
@@ -24,7 +24,7 @@ export default function Hand({ sign, mode, sendResult, img }) {
                     }
                 }}
             >
-                <img src={img} alt='rock' />
+                <img src={img} alt='sign' />
             </div>
         </div>
     )
