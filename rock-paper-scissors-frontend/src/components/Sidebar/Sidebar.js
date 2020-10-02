@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import Select from "react-dropdown-select";
 import "./Sidebar.css";
-const Sidebar = ({ joinRoom }) => {
+const Sidebar = ({ joinRoom, theme, setTheme }) => {
 	const [username, setName] = useState("");
 	const [room, setRoom] = useState("");
-
+	const options = [];
 	return (
 		<div className='sidebar'>
 			<form className='join-form'>
@@ -30,6 +31,30 @@ const Sidebar = ({ joinRoom }) => {
 				>
 					Join
 				</button>
+				<div className='dev-magic'>
+					<button
+						className='join-btn'
+						type='submit'
+						onClick={e => joinRoom("Robin", "room", e)}
+					>
+						Robin
+					</button>
+					<button
+						className='join-btn'
+						type='submit'
+						onClick={e => joinRoom("Batman", "room", e)}
+					>
+						Batman
+					</button>
+				</div>
+				<div className='theme-chooser'>
+					<span>Theme: </span>
+					<Select
+						options={options}
+						values={["classic", "poop"]}
+						onChange={value => setTheme(value)}
+					/>
+				</div>
 			</form>
 		</div>
 	);
