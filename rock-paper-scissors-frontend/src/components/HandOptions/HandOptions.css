@@ -27,7 +27,8 @@
 	border-radius: 50%;
 	justify-content: center;
 	margin: 0px auto;
-	object-fit: cover;
+	object-fit: contain;
+	max-width: 100px;
 }
 .player1 > .active {
 	transform: scale(1.2);
