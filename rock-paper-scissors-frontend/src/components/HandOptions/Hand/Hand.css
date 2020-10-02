@@ -1,15 +1,24 @@
 .Hand {
-	width: 200px;
-	height: 200px;
-	border: 2px solid mediumseagreen;
+	width: 230px;
+	height: 230px;
+	border: 2px solid #FF2D31;
 	border-radius: 50%;
 	cursor: pointer;
 	display: flex;
 	flex-direction: row;
 }
-.player1 > .Hand:hover {
+
+img {
+    background-color: transparent;
+}
+
+.Hand.blue:hover {
 	transform: scale(1.1);
-	border-color: yellow;
+	background-color: #FF2D31;
+}
+.Hand.red:hover {
+	transform: scale(1.1);
+	background-color: #141334;
 }
 .Hand > img {
 	height: 100%;
