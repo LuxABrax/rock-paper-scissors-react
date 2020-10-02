@@ -29,6 +29,14 @@ const Login = () => {
 				<Link to={`/room?room=${room}&&username=${username}`}>
 					<button className='login-btn'>Start</button>
 				</Link>
+				<div className='dev-magic'>
+					<Link to={`/room?room=Room&&username=Batman`}>
+						<button className='login-btn batman'>Add Batman</button>
+					</Link>
+					<Link to={`/room?room=Room&&username=Robin`}>
+						<button className='login-btn robin'>Add Robin</button>
+					</Link>
+				</div>
 			</form>
 		</div>
 	);

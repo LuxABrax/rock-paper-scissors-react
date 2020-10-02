@@ -11,6 +11,7 @@ let socket;
 const RoomPage = ({ location }) => {
 	const ENDPOINT = "localhost:5002";
 	const [sideBar, setSideBar] = useState(false);
+	const [theme, setTheme] = useState("classic");
 	const [user, setUser] = useState();
 	const [users, setUsers] = useState(0);
 	//const [active, setActive] = useState("none");
@@ -85,6 +86,7 @@ const RoomPage = ({ location }) => {
 			/* setUsers([...users, username]); */
 		});
 		setSideBar(false);
+		if (username === "Robin" || username === "Batman") setTheme("batman");
 	};
 	const userReady = () => {
 		socket.emit("userReady", user.roomName);
@@ -107,14 +109,23 @@ const RoomPage = ({ location }) => {
 
 			<div className='roomContainer'>
 				<div
-					className={`${sideBar ? "sidebar-open" : "sidebar-container"
-						}`}
+					className={`${
+						sideBar ? "sidebar-open" : "sidebar-container"
+					} `}
 				>
-					<Sidebar joinRoom={joinRoom} />
+					<Sidebar
+						joinRoom={joinRoom}
+						theme={theme}
+						setTheme={setTheme}
+					/>
 				</div>
 				{user ? (
 					<div className='room-board'>
-						<HandOptions player={2} sendResult={sendResult} />
+						<HandOptions
+							player={2}
+							sendResult={sendResult}
+							theme={theme}
+						/>
 						<GameScreen
 							mode={mode}
 							setMode={setMode}
@@ -125,16 +136,18 @@ const RoomPage = ({ location }) => {
 							results={res}
 							socketID={socket.id}
 							gameReady={gameReady}
+							theme={theme}
 						/>
 						<HandOptions
 							player={1}
 							sendResult={sendResult}
+							theme={theme}
 							mode={mode}
 						/>
 					</div>
 				) : (
-						<h1 className='room-board enter-room'>Enter Room!</h1>
-					)}
+					<h1 className='room-board enter-room'>Enter Room!</h1>
+				)}
 
 				{/* <div className='sidebar-info-container'>
 					<div className='roomInformation'>

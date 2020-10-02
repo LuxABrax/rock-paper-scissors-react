@@ -32,7 +32,7 @@
 	font-size: 24px;
 	margin: 5px auto;
 	padding: 2px;
-	border: 2px solid  rgba(59, 39, 1, 0.824);
+	border: 2px solid rgba(59, 39, 1, 0.824);
 	border-radius: 5px;
 }
 .join-btn {
@@ -43,9 +43,20 @@
 	margin: 0 auto;
 	margin-top: 20px;
 	text-align: center;
-	background-color: rgba(255,0,5,0.8239670868347339);
+	background-color: rgba(255, 0, 5, 0.8239670868347339);
 	color: white;
 	border: 2px solid seagreen;
 	border-radius: 5px;
 	font-family: arcade;
+}
+.dev-magic {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	width: 100%;
+	font-size: 10px;
+}
+.dev-magic > button {
+	width: 108px;
+	padding: 3px;
 }
