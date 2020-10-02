@@ -19,10 +19,10 @@
 
 .room-board {
 	flex: 0.8;
-	height: 100vh;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
 }
 
