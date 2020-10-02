@@ -11,7 +11,10 @@
 img {
 	background-color: transparent;
 }
-
+.blue > img {
+	transform: scaleX(-1) scaleY(-1) scaleZ(-1) scaleY(-1) scaleZ(-1)
+		rotate(120deg);
+}
 .Hand.blue:hover {
 	transform: scale(1.1);
 	background-color: #ff2d31;
