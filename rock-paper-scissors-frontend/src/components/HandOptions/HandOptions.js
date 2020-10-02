@@ -8,14 +8,20 @@ MAKE BACKGROUND AND CREATE HAND COMPONENT
 */
 
 const HandOptions = ({ player, sendResult, theme, mode, color }) => {
-	/* const [active, setActive] = useState("none");
-	const [clickable, setClickable] = useState(true); */
+	const [clickable, setClickable] = useState(true);
+	/* 
+	const [active, setActive] = useState("none");
+	 */
 	//const [signs, setSigns] = useState(['paper', 'scissors', 'rock']);
 	const [signs, setSigns] = useState([
 		{ sign: "rock", img: "images/rock-basic.png" },
 		{ sign: "paper", img: "/images/paper-basic.png" },
 		{ sign: "scissors", img: "/images/scissors-basic.png" },
 	]);
+
+	useEffect(() => {
+		if (mode === "result") setClickable(!clickable);
+	}, [mode]);
 
 	/* 	const [themes, setThemes] = useState({
 			classic: [
@@ -84,6 +90,8 @@ const HandOptions = ({ player, sendResult, theme, mode, color }) => {
 						img={sign.img}
 						mode={mode}
 						color={color}
+						clickable={clickable}
+						setClickable={setClickable}
 					/>
 				))}
 			</div>

@@ -36,8 +36,8 @@ io.on("connection", socket => {
 		if (user) {
 			removeUser(socket.id);
 			let room = getRoom(user.roomName);
-			socket.to(user.roomName).emit("leftRoom", { players: room.users });
-			socket.leave(user.roomName);
+			socket.to(room.name).emit("leftRoom", { players: room.users });
+			socket.leave(room.name);
 			console.log(`${user.username} left room: ${user.roomName}`);
 		}
 	});
