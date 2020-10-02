@@ -10,6 +10,7 @@ background: linear-gradient(20deg, rgba(2,0,36,0.927608543417367) 50%, rgba(255,
 	justify-content: space-between;
 	align-items: center;
 	position: relative;
+	flex: 1
 }
 .column {
 	flex: 0.3;
@@ -48,7 +49,7 @@ background: linear-gradient(20deg, rgba(2,0,36,0.927608543417367) 50%, rgba(255,
 }
 
 .vS {
-	margin: 30% 0 0 0;
+	margin: 15% 0 0 0;
 	font-size: 10vh;
 	color: white;
 }
