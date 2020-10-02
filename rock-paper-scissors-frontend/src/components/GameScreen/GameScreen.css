@@ -10,7 +10,8 @@ background: linear-gradient(20deg, rgba(2,0,36,0.927608543417367) 50%, rgba(255,
 	justify-content: space-between;
 	align-items: center;
 	position: relative;
-	flex: 1
+	flex: 1;
+	border: 5px solid gold;
 }
 .column {
 	flex: 0.3;
@@ -19,22 +20,29 @@ background: linear-gradient(20deg, rgba(2,0,36,0.927608543417367) 50%, rgba(255,
 	background-color: transparent;
 	color: white;
 	border: 1px solid black;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	border-radius: 5px;
-	width: 200px;
+	width: 300px;
+	height: 30px;
 	padding: 10px;
 	margin: 4px;
+	font-size: 25px;
 }
 .myName {
 	position: absolute;
 	left: 0;
 	bottom: 0;
 	background-color: rgba(255,0,5,0.8239670868347339);
+	margin: 0 0 10px 10px;
 }
 .opName {
 	position: absolute;
 	right: 0;
 	top: 0;
 	background-color: rgba(4, 0, 75, 0.928);
+	margin: 10px 10px 0 0;
 }
 .timer {
 	color: red;

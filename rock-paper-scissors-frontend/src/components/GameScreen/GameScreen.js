@@ -103,7 +103,7 @@ const GameScreen = ({
 						? users[0].username === user.username
 							? users[1].username
 							: users[0].username
-						: "Opponent"}
+						: "Waiting for opponent..."}
 				</div>
 			</div>
 		</div>
