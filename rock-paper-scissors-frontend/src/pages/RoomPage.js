@@ -1,36 +1,35 @@
 import React, { useEffect, useState } from "react";
-import io, { Socket } from "socket.io-client";
+import io from "socket.io-client";
 import GameScreen from "../components/GameScreen/GameScreen";
 import HandOptions from "../components/HandOptions/HandOptions";
-import { Link } from "react-router-dom";
 import "./RoomPage.css";
 import Sidebar from "../components/Sidebar/Sidebar";
 
 let socket;
 
-const RoomPage = ({ location }) => {
+const RoomPage = () => {
 	const ENDPOINT = "localhost:5002";
 	const [sideBar, setSideBar] = useState(false);
 	const [theme, setTheme] = useState("classic");
 	const [user, setUser] = useState();
 	const [users, setUsers] = useState(0);
-	//const [active, setActive] = useState("none");
 	const [mode, setMode] = useState("prep");
 	const [gameReady, setGameReady] = useState(false);
 	const [roomState, setRoomState] = useState("none");
-
 	const [res, setRes] = useState(undefined);
 	const [score, setScore] = useState({
 		mywins: 0,
 		opWins: 0,
 	});
 
+
 	useEffect(() => {
 		socket = io(ENDPOINT);
 
 		socket.on("leftRoom", ({ players }) => {
-			console.log(players);
+			setMode('prep');
 			setUsers([...players]);
+			console.log('user left room');
 		});
 
 		socket.on("userJoined", ({ username, roomName, players }) => {
@@ -38,8 +37,8 @@ const RoomPage = ({ location }) => {
 			setRoomState(roomName);
 			console.log(users, username, roomName);
 		});
+
 		socket.on("gameReady", () => {
-			//setGameReady(true);
 			setMode("time");
 		});
 
@@ -52,13 +51,7 @@ const RoomPage = ({ location }) => {
 			} else if (socket.id === results[1].socketID) {
 				result = results[1].result;
 			}
-			if (result === "win") {
-				console.log("I won");
-				//setPoints([points[0] + 1, points[1]]);
-			} else {
-				console.log("I lost");
-				//setPoints([points[0], points[1] + 1]);
-			}
+
 			setScore({
 				...score,
 				result,
@@ -72,25 +65,37 @@ const RoomPage = ({ location }) => {
 			socket.off();
 		};
 	}, []);
+
+
 	const selectRoom = e => {
 		setSideBar(true);
 	};
 
+
 	const joinRoom = (username, roomName, e) => {
+		setMode('prep');
+
 		e.preventDefault();
+
 		console.log(username, roomName);
+
 		setUser({ roomName, username });
+
 		socket.emit("leaveRoom");
 
-		socket.emit("joinRoom", { roomName, username }, () => {
-			/* setUsers([...users, username]); */
-		});
+		socket.emit("joinRoom", { roomName, username });
+
 		setSideBar(false);
+
 		if (username === "Robin" || username === "Batman") setTheme("batman");
 	};
+
+
 	const userReady = () => {
 		socket.emit("userReady", user.roomName);
 	};
+
+
 	const sendResult = result => {
 		if (user.username && user.roomName && mode === "fight") {
 			socket.emit("result", {
@@ -100,6 +105,7 @@ const RoomPage = ({ location }) => {
 			});
 		}
 	};
+
 
 	return (
 		<div className='main'>
