@@ -1,7 +1,7 @@
 .Hand {
 	width: 230px;
 	height: 230px;
-	border: 2px solid #FF2D31;
+	border: 2px solid #ff2d31;
 	border-radius: 50%;
 	cursor: pointer;
 	display: flex;
@@ -9,12 +9,12 @@
 }
 
 img {
-    background-color: transparent;
+	background-color: transparent;
 }
 
 .Hand.blue:hover {
 	transform: scale(1.1);
-	background-color: #FF2D31;
+	background-color: #ff2d31;
 }
 .Hand.red:hover {
 	transform: scale(1.1);
