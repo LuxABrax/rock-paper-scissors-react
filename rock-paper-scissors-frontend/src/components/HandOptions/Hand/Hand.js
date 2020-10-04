@@ -5,16 +5,20 @@ import './Hand.css';
 export default function Hand({ sign, mode, sendResult, img, color, clickable, setClickable }) {
 
 
-    const [active, setActive] = useState("none");
+    const [active, setActive] = useState(false);
+
+    useEffect(() => {
+        if (mode === 'time') setActive(false);
+    }, [mode]);
 
     return (
         <div>
             <div
-                className={`Hand ${color} pos1 ${clickable ? "" : "signNotClickable"} ${active === "rock" ? "active" : ""
+                className={`Hand ${color} pos1 ${clickable ? "" : "signNotClickable"} ${active && !clickable ? "active" : ""
                     }`}
                 onClick={() => {
                     if (mode === "fight") {
-                        setActive(sign);
+                        setActive(true);
                         sendResult(sign);
                         setClickable(!clickable);
                     }

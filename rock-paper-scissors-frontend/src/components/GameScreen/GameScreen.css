@@ -1,9 +1,8 @@
 .gameContainer {
 	height: 300px;
-	/* background-color: mediumspringgreen; */
 	background: rgb(2,0,36);
-background: linear-gradient(20deg, rgba(2,0,36,0.927608543417367) 50%, rgba(255,0,5,0.8239670868347339) 50%);
-	width: 100%;
+    background: linear-gradient(20deg, rgba(2,0,36,0.927608543417367) 50%, rgba(255,0,5,0.8239670868347339) 50%);
+	width: 99%;
 	text-align: center;
 	display: flex;
 	flex-direction: row;
@@ -46,6 +45,20 @@ background: linear-gradient(20deg, rgba(2,0,36,0.927608543417367) 50%, rgba(255,
 }
 .timer {
 	color: red;
+	background-color: gold;
+	border: 2px solid #FF2D31;
+	border-radius: 5px;
+	width: 100px;
+	height: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 5px 0 0 0;
+}
+
+.timer:hover {
+	cursor: pointer;
+	transform: scale(1.1);
 }
 
 .column.scoreBoard {
@@ -64,10 +77,22 @@ background: linear-gradient(20deg, rgba(2,0,36,0.927608543417367) 50%, rgba(255,
 
 .scoreBoard-comp {
 	color: white;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
 }
 
 .score {
 	width: 50%;
+}
+
+.resultContainer {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
 }
 /* .positions {
 	height: 100%;

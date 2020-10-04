@@ -34,7 +34,7 @@ const GameScreen = ({
 	switch (mode) {
 		case "prep":
 			comp = (
-				<button
+				<div
 					className='timer'
 					onClick={() => {
 						userReady();
@@ -42,7 +42,7 @@ const GameScreen = ({
 					}}
 				>
 					Ready
-				</button>
+				</div>
 			);
 			break;
 
@@ -67,9 +67,9 @@ const GameScreen = ({
 
 		case "result":
 			comp = (
-				<>
+				<div className="resultContainer">
 					<h1>{displayResult(score.result)}</h1>
-					<button
+					<div
 						className='timer'
 						onClick={() => {
 							userReady();
@@ -77,8 +77,8 @@ const GameScreen = ({
 						}}
 					>
 						play again
-					</button>
-				</>
+					</div>
+				</div>
 			);
 
 		default:
@@ -91,11 +91,15 @@ const GameScreen = ({
 				<div className='userTitle myName'>{user.username}</div>
 			</div>
 			<div className='column scoreBoard'>
+
 				<div className='vS'>VS</div>
+
 				<div className='scoreBoard-comp'>
 					{comp ? comp : "Enter Room"}
 				</div>
+
 				<ScoreBoard classname="score" user={user} results={results} socketID={socketID} />
+
 			</div>
 			<div className='column'>
 				<div className='userTitle opName'>
@@ -103,7 +107,7 @@ const GameScreen = ({
 						? users[0].username === user.username
 							? users[1].username
 							: users[0].username
-						: "Waiting for opponent..."}
+						: "Waiting  for  opponent..."}
 				</div>
 			</div>
 		</div>

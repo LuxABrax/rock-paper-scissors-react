@@ -4,11 +4,7 @@ import "./Sidebar.css";
 const Sidebar = ({ joinRoom, theme, setTheme }) => {
 	const [username, setName] = useState("");
 	const [room, setRoom] = useState("");
-	const options = [
-		{ value: "classic", label: "Classic" },
-		{ value: "poop", label: "Poop" },
-		{ value: "batman", label: "Batman" },
-	];
+
 	return (
 		<div className='sidebar'>
 			<form className='join-form'>
@@ -35,30 +31,6 @@ const Sidebar = ({ joinRoom, theme, setTheme }) => {
 				>
 					Join
 				</button>
-				<div className='dev-magic'>
-					<button
-						className='join-btn'
-						type='submit'
-						onClick={e => joinRoom("Robin", "room", e)}
-					>
-						Robin
-					</button>
-					<button
-						className='join-btn'
-						type='submit'
-						onClick={e => joinRoom("Batman", "room", e)}
-					>
-						Batman
-					</button>
-				</div>
-				<div className='theme-chooser'>
-					<span>Theme: </span>
-					<Select
-						options={options}
-						value={options.find(opt => opt.value === theme)}
-						onChange={value => setTheme(value)}
-					/>
-				</div>
 			</form>
 		</div>
 	);

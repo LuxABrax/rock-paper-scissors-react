@@ -4,6 +4,7 @@ import GameScreen from "../components/GameScreen/GameScreen";
 import HandOptions from "../components/HandOptions/HandOptions";
 import "./RoomPage.css";
 import Sidebar from "../components/Sidebar/Sidebar";
+import OpponentHand from '../components/HandOptions/OpponentHand/OpponentHand.js'
 
 let socket;
 
@@ -126,12 +127,7 @@ const RoomPage = () => {
 				</div>
 				{user ? (
 					<div className='room-board'>
-						<HandOptions
-							player={2}
-							sendResult={sendResult}
-							theme={theme}
-							color={'red'}
-						/>
+						<OpponentHand />
 						<GameScreen
 							mode={mode}
 							setMode={setMode}

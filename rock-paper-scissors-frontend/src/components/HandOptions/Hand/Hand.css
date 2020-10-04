@@ -1,7 +1,6 @@
 .Hand {
 	width: 230px;
 	height: 230px;
-	
 	border-radius: 50%;
 	cursor: pointer;
 	display: flex;
@@ -40,21 +39,33 @@ img {
 	object-fit: contain;
 	max-width: 100px;
 }
-.player1 > .active {
-	transform: scale(1.2);
-	border-color: red;
+.active {
+	background-color: gold;
 }
 
 .signNotClickable {
 	pointer-events: none;
 }
-
-@media (max-width: 950px) {
-	.HandOptions {
-		width: 90%;
-	}
+@media (min-width: 1024px) {
+	
 	.Hand {
-		width: 100px;
-		height: 100px;
+	width: 130px;
+	height: 130px;
+	}
+}
+
+@media (min-width: 1830px) {
+	
+	.Hand {
+	width: 250px;
+	height: 250px;
+	}
+}
+
+@media (min-width: 2090px) {
+	
+	.Hand {
+	width: 300px;
+	height: 300px;
 	}
 }
