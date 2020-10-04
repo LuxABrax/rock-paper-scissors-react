@@ -4,14 +4,16 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
-    background-color: darkgrey;
-    width: 50%;
+    background-color: gold;
+	width: 50%;
+	border-radius: 5px;
 }
 .score {
 	padding: 2px;
 	font-weight: bolder;
 	font-size: 400;
-	background-color: lightgray;
+	background-color: gold;
+	border-radius: 5px;
 }
 .sw {
 	color:  rgba(2,0,36,0.927608543417367);
@@ -22,5 +24,5 @@
 }
 
 .scoreDivider {
-    background-color: lightgray;
+    background-color: #FF2D31;
 }

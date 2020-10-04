@@ -35,7 +35,7 @@ const Timer = ({ isActive, setIsActive, setMode }) => {
 
 	return (
 		<div className='app'>
-			<div className='time'>{seconds}s</div>
+			<div className='time'>{seconds}</div>
 		</div>
 	);
 };

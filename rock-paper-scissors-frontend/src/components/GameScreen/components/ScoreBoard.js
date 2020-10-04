@@ -28,7 +28,7 @@ export default function ScoreBoard({ user, results, socketID }) {
     return (
         <div className='score-container'>
             <div className='score sw'>{score.user}</div>
-            <p className="scoreDivider">-</p>
+            <p className="scoreDivider">|</p>
             <div className='score sl'>{score.opponent}</div>
         </div>
     );
