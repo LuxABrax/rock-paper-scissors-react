@@ -2,17 +2,9 @@ import React, { useState, useEffect } from "react";
 
 import "./Timer.css";
 
-const Timer = ({ isActive, setIsActive, setMode }) => {
+const Timer = ({ isActive, setMode }) => {
 	const [seconds, setSeconds] = useState(3);
 
-	function toggle() {
-		setIsActive(!isActive);
-	}
-
-	function reset() {
-		setSeconds(0);
-		setIsActive(false);
-	}
 
 	useEffect(() => {
 		console.log(isActive);

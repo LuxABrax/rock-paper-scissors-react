@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 
 import "./ScoreBoard.css";
 
-export default function ScoreBoard({ user, results, socketID }) {
+export default function ScoreBoard({ mode, results, socketID }) {
     const [score, setScore] = useState({ user: 0, opponent: 0 });
     useEffect(() => {
         let result;
+
         if (results) {
             if (socketID === results[0].socketID) {
                 result = results[0].result;
@@ -23,7 +24,12 @@ export default function ScoreBoard({ user, results, socketID }) {
                 setScore({ ...score, opponent: points });
             }
         }
+
     }, [results]);
+
+    useEffect(() => {
+        if (mode === 'prep') setScore({ user: 0, opponent: 0 });
+    }, [mode]);
 
     return (
         <div className='score-container'>

@@ -36,8 +36,8 @@
 
 
 .Hand {
-	width: 230px;
-	height: 230px;
+	width: 100px;
+	height: 100px;
 	border: 2px solid mediumseagreen;
 	border-radius: 50%;
 	cursor: pointer;
@@ -66,12 +66,14 @@
 	pointer-events: none;
 }
 
-@media (max-width: 1200px) {
+@media (min-width: 1500px) {
 	.HandOptions {
 		width: 90%;
+		height: 90%;
 	}
 	.Hand {
 		width: 100px;
 		height: 100px;
 	}
 }
+

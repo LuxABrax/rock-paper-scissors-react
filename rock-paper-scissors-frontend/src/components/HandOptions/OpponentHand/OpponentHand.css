@@ -19,9 +19,10 @@
 	justify-content: space-around;
 	align-items: center;
 	background: white;
-	
 	border-radius: 5px;
-	border-style: double;
+    border-style: double;
+    background-color: rgba(255,0,5,0.8239670868347339);
+	border-color: rgba(2,0,36,0.927608543417367);
 	
 }
 
@@ -35,20 +36,27 @@
 }
 
 
+
 .Hand {
 	width: 230px;
 	height: 230px;
-	border: 2px solid mediumseagreen;
 	border-radius: 50%;
 	cursor: pointer;
 	display: flex;
-	flex-direction: row;
-	background-color: white;
+    flex-direction: row;
+    border: 5px solid rgba(2,0,36,0.927608543417367);
 }
-.player1 > .Hand:hover {
-	transform: scale(1.1);
-	border-color: yellow;
+
+
+
+img {
+	background-color: transparent;
 }
+.blue > img {
+	transform: scaleX(-1) scaleY(-1) scaleZ(-1) scaleY(-1) scaleZ(-1)
+		rotate(120deg);
+}
+
 .Hand > img {
 	height: 100%;
 	border-radius: 50%;
@@ -57,23 +65,31 @@
 	object-fit: contain;
 	max-width: 100px;
 }
-.player1 > .active {
-	transform: scale(1.2);
-	border-color: red;
+.active {
+	background-color: gold;
 }
 
-.signNotClickable {
-	pointer-events: none;
-}
-
-@media (max-width: 1200px) {
-	.HandOptions {
-		width: 90%;
-	}
+@media (min-width: 1024px) {
+	
 	.Hand {
-		width: 100px;
-		height: 100px;
+	width: 130px;
+	height: 130px;
 	}
 }
 
+@media (min-width: 1830px) {
+	
+	.Hand {
+	width: 250px;
+	height: 250px;
+	}
+}
+
+@media (min-width: 2090px) {
+	
+	.Hand {
+	width: 300px;
+	height: 300px;
+	}
+}
 

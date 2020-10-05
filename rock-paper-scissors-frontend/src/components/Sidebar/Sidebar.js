@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import Select from "react-dropdown-select";
 import "./Sidebar.css";
-const Sidebar = ({ joinRoom, theme, setTheme }) => {
+const Sidebar = ({ joinRoom }) => {
 	const [username, setName] = useState("");
 	const [room, setRoom] = useState("");
 

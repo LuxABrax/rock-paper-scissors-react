@@ -14,14 +14,7 @@ const GameScreen = ({
 	gameReady
 }) => {
 
-	const [round, setRound] = useState(1);
-	const [seconds, setSeconds] = useState(3);
 	const [isActive, setIsActive] = useState(true);
-
-	function reset() {
-		setIsActive(false);
-	}
-
 
 	let comp;
 
@@ -30,6 +23,8 @@ const GameScreen = ({
 		if (result === "win") return "You Won!";
 		if (result === "loss") return "You Lost!";
 	};
+
+
 
 	switch (mode) {
 		case "prep":
@@ -51,7 +46,6 @@ const GameScreen = ({
 			break;
 
 		case "time":
-			//setCounter(5);
 			comp = (
 				<Timer
 					isActive={isActive}
@@ -95,10 +89,10 @@ const GameScreen = ({
 				<div className='vS'>VS</div>
 
 				<div className='scoreBoard-comp'>
-					{comp ? comp : "Enter Room"}
+					{comp ? comp : <p className="enterRoom__text">Enter Room</p>}
 				</div>
 
-				<ScoreBoard classname="score" user={user} results={results} socketID={socketID} />
+				<ScoreBoard classname="score" user={user} results={results} socketID={socketID} mode={mode} />
 
 			</div>
 			<div className='column'>

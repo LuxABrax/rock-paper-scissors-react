@@ -7,12 +7,10 @@ import "./OpponentHand.css";
 MAKE BACKGROUND AND CREATE HAND COMPONENT
 */
 
-const OpponentHand = ({ player, sendResult, mode, color }) => {
-    const [clickable, setClickable] = useState(true);
+const OpponentHand = ({ opponentRes, mode }) => {
+
     const [active, setActive] = useState("none");
-    /* 
-     */
-    //const [signs, setSigns] = useState(['paper', 'scissors', 'rock']);
+
     const [signs, setSigns] = useState([
         { sign: "rock", img: "images/rock-basic.png" },
         { sign: "paper", img: "/images/paper-basic.png" },
@@ -20,22 +18,26 @@ const OpponentHand = ({ player, sendResult, mode, color }) => {
     ]);
 
     useEffect(() => {
-        if (mode === "time") setClickable(true);
-        if (mode === 'prep') setActive(false);
-    }, [mode]);
+        console.log(opponentRes);
+        if (mode === 'result') {
+            setActive(opponentRes);
+        } else {
+            setActive('none');
+        }
+    }, [mode, opponentRes]);
 
 
 
     return (
-        <div className={`handOptions__outerContainer player${player}`}>
-            <div className={`handOptions__innerContainer ${color}`}>
-                <div className={`Hand ${color} pos1`}>
+        <div className={`handOptions__outerContainer player opponentHand`}>
+            <div className={`handOptions__innerContainer `}>
+                <div className={`Hand  pos1 rock ${active === 'rock' ? 'active' : ''}`}>
                     <img src={signs[0].img} alt='sign' />
                 </div>
-                <div className={`Hand ${color} pos1`}>
+                <div className={`Hand  pos1 paper ${active === 'paper' ? 'active' : ''}`}>
                     <img src={signs[1].img} alt='sign' />
                 </div>
-                <div className={`Hand ${color} pos1`}>
+                <div className={`Hand  pos1 scissors ${active === 'scissors' ? 'active' : ''}`}>
                     <img src={signs[2].img} alt='sign' />
                 </div>
             </div>
