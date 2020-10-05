@@ -11,13 +11,13 @@ let socket;
 const RoomPage = () => {
 	const ENDPOINT = "localhost:5002";
 	const [sideBar, setSideBar] = useState(false);
-	const [theme, setTheme] = useState("classic");
 	const [user, setUser] = useState();
 	const [users, setUsers] = useState(0);
 	const [mode, setMode] = useState("prep");
 	const [gameReady, setGameReady] = useState(false);
 	const [roomState, setRoomState] = useState("none");
 	const [res, setRes] = useState(undefined);
+	const [opponentRes, setOpponentRes] = useState(undefined);
 	const [score, setScore] = useState({
 		mywins: 0,
 		opWins: 0,
@@ -46,11 +46,12 @@ const RoomPage = () => {
 		socket.on("results", results => {
 			let result;
 			setRes(results);
-			console.log("halobaba");
 			if (socket.id === results[0].socketID) {
 				result = results[0].result;
+				setOpponentRes(results[1].input);
 			} else if (socket.id === results[1].socketID) {
 				result = results[1].result;
+				setOpponentRes(results[0].input);
 			}
 
 			setScore({
@@ -78,8 +79,6 @@ const RoomPage = () => {
 
 		e.preventDefault();
 
-		console.log(username, roomName);
-
 		setUser({ roomName, username });
 
 		socket.emit("leaveRoom");
@@ -88,7 +87,7 @@ const RoomPage = () => {
 
 		setSideBar(false);
 
-		if (username === "Robin" || username === "Batman") setTheme("batman");
+
 	};
 
 
@@ -121,13 +120,11 @@ const RoomPage = () => {
 				>
 					<Sidebar
 						joinRoom={joinRoom}
-						theme={theme}
-						setTheme={setTheme}
 					/>
 				</div>
 				{user ? (
 					<div className='room-board'>
-						<OpponentHand />
+						<OpponentHand opponentRes={opponentRes} mode={mode} />
 						<GameScreen
 							mode={mode}
 							setMode={setMode}
@@ -138,12 +135,11 @@ const RoomPage = () => {
 							results={res}
 							socketID={socket.id}
 							gameReady={gameReady}
-							theme={theme}
+
 						/>
 						<HandOptions
 							player={1}
 							sendResult={sendResult}
-							theme={theme}
 							mode={mode}
 							color={"blue"}
 						/>
@@ -151,17 +147,6 @@ const RoomPage = () => {
 				) : (
 						<h1 className='room-board enter-room'>Enter Room!</h1>
 					)}
-
-				{/* <div className='sidebar-info-container'>
-					<div className='roomInformation'>
-						<h2 className='roomName__info'>
-							Room: {user ? user.roomName : ""}
-						</h2>
-						<h3 className='playes_info'>
-							Players: {users ? users.length : users}
-						</h3>
-					</div>
-				</div> */}
 			</div>
 		</div>
 	);

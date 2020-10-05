@@ -81,7 +81,11 @@
 	justify-content: center;
 	flex-direction: column;
 	align-items: center;
+	
+	
 }
+
+
 
 .score {
 	width: 50%;
@@ -94,18 +98,4 @@
 	align-items: center;
 	text-align: center;
 }
-/* .positions {
-	height: 100%;
-	width: 20%;
-	margin: 0 auto;
-	background-color: blue;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
-	align-items: center;
-}
-.position {
-	width: 120px;
-	height: 120px;
-	background-color: yellow;
-} */
+

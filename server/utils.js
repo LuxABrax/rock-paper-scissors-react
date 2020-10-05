@@ -1,58 +1,7 @@
-const { get } = require("http");
 
 let rooms = [];
 
-/* //check if user exists in rooms
-const userExists = (users, username) => {
-	if (users.length !== 0) {
-		return users.some((user, index, arr) => {
-			return user === username;
-		});
-	} else {
-		return false;
-	}
-}
 
-//puts the user in the room if the username isnt taken
-const userJoin = (socketID, roomname, username) => {
-
-	let userExists;
-
-	if (rooms.length !== 0) {
-		rooms.forEach(oneRoom => {
-			if (oneRoom.name === roomname) {
-				if (!userExists(room.users, username) && oneRoom.users.length <= 2) {
-					room.users.push({ socketID, username, roomname });
-					return
-				} else {
-					userExists = true;
-				}
-			}
-		})
-	}
-	console.log(rooms);
-	if (userExists) return { error: 'username already taken or room full', user: { socketID, username, roomname } };
-
-	return { socketID, username, roomname };
-}
-
-
-//INTERNAL FUNCTIONS
-
-
-
-
-//gets one room, requires a roomname
-const getRoom = (roomName) => {
-	const room = rooms.forEach(room => {
-		if (room.name === roomName) return room;
-	})
-
-	if (room != null) return room;
-
-	return false;
-} */
-const addUserInput = (input, socketID) => { };
 const updateUserInput = (socketID, input) => {
 	let success = false;
 
@@ -68,6 +17,7 @@ const updateUserInput = (socketID, input) => {
 	return success;
 };
 
+
 const getRoom = roomName => {
 	let room;
 	rooms.forEach(oneRoom => {
@@ -79,6 +29,7 @@ const getRoom = roomName => {
 	return room;
 };
 
+
 const addPlayerToRoom = (socketID, username, roomName) => {
 	createRoom(roomName);
 	let user = addUser(username, roomName, socketID);
@@ -87,6 +38,7 @@ const addPlayerToRoom = (socketID, username, roomName) => {
 
 	return user;
 };
+
 
 const checkPlayersInRoom = roomName => {
 	let gameReady = false;
@@ -97,6 +49,7 @@ const checkPlayersInRoom = roomName => {
 
 	return gameReady;
 };
+
 
 const createRoom = roomName => {
 	let exists;
@@ -111,6 +64,7 @@ const createRoom = roomName => {
 
 	return { room: { name: roomName, users: [] }, created: true };
 };
+
 
 const addUser = (username, roomName, socketID) => {
 	let valid = checkUser(username, roomName);
@@ -133,6 +87,7 @@ const addUser = (username, roomName, socketID) => {
 	return { user: { username, roomName, socketID } };
 };
 
+
 const checkUser = (username, roomName) => {
 	let oneRoom = false;
 
@@ -153,16 +108,6 @@ const checkUser = (username, roomName) => {
 	return true;
 };
 
-/* const removeUser = (username, roomName) => {
-
-	rooms.forEach(room => {
-		if (room.name === roomName) {
-			room.users = room.users.filter(user => user.username !== username);
-		}
-	});
-
-
-} */
 
 const getUser = socketID => {
 	let user;
@@ -174,6 +119,8 @@ const getUser = socketID => {
 
 	return undefined;
 };
+
+
 const userReady = roomname => {
 	console.log("room: ", roomname);
 	let oneRoom;
@@ -204,11 +151,6 @@ const removeRoom = roomName => {
 	return rooms;
 };
 
-/* RESULT CALC */
-
-/* const calcResult = (result, socketID) => {
-	if (user)
-}; */
 
 const calcResult = (input1, input2) => {
 	input1.result = 'loss';
@@ -269,43 +211,8 @@ const storeInput = (input, username, roomName, socketID) => {
 
 	return room;
 };
-// const getInput = (roomName, username) =>{
-//     let results={
-//         my:'',
-//         opp:''
-//     }
-//     rooms.forEach(room => {
-//         if(room.name === roomName){
-//             room.users.forEach(user =>{
-//                 if (user.username === username) {
-//                     results.my = user.input;
-//                 } else {
-//                     results.opp = user.input;
-//                 }
-//             })
-//         }
-//     })
-//     console.log(results)
-// }
 
-const validateInput = () => { };
 
-/* ----END RESULT CALC----- */
-/*
-console.log(createRoom("room"));
-console.log(createRoom("room"));
-
-//addUser('getrobin', 'room', 'id');
-console.log(addUser("getrobin", "room", "id"));
-console.log(addUser("getrobin", "room", "id"));
-console.log(addUser("getrobin1", "room", "id1"));
-storeInput("rock", "getrobin", "room");
-storeInput("paper", "getrobin1", "room");
-//console.log(removeUser('id'));
-//removeRoom('room');
-console.log(getRoom("room"));
-console.log(rooms[0].users);
-console.log(rooms);*/
 
 module.exports = {
 	addPlayerToRoom,
@@ -314,7 +221,8 @@ module.exports = {
 	getUser,
 	storeInput,
 	calcResult,
-	updateUserInput,
 	userReady,
 	storeRoom
 };
+
+

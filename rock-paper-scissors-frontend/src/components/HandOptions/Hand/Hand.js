@@ -8,7 +8,7 @@ export default function Hand({ sign, mode, sendResult, img, color, clickable, se
     const [active, setActive] = useState(false);
 
     useEffect(() => {
-        if (mode === 'time') setActive(false);
+        if (mode === 'time' || mode === 'wait') setActive(false);
     }, [mode]);
 
     return (
